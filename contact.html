@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMHF GLOBAL CONTACT</title>
+<!--================= Favicon =================-->
+<link rel="apple-touch-icon" href="assets/images/smhf dark logo.png">
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/smhf dark logo.png">
+<!--================= Bootstrap V5 css =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+<!--================= Font Awesome 5 css =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/all.min.css">
+<!--================= Animate css =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
+<!--================= Animate css =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/magnific-popup.css">
+<!--================= Main Stylesheet =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/metisMenu.css">
+<!--================= Main Stylesheet =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/rtsmenu.css">
+<!--================= Animate css =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/swiper.min.css">
+<!--================= Main Stylesheet =================-->
+<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+</head>
+<style>
+    /* logo ki styling */
+    .logo1 {
+        width: 200px;
+        /* Logo size adjust karne ke liye */
+        margin-right: auto;
+        /* Logo ko left corner par le jane ke liye */
+    }
+
+    /* logo styling khatam */
+    .container01 {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
+        border-radius: 10px;
+    }
+
+    /* karachi weather ki styling */
+    .container01 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 5px;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+
+    #temp {
+        font-size: 15px;
+        margin: 0;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+    #time {
+        font-size: 15x;
+        margin: 2px 0 0;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+    @media screen and (max-width: 320px) {
+        .container01 {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        a {
+            margin-bottom: 10px;
+        }
+    }
+
+    @media screen and (max-width: 513px) {
+        .container01 {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        a {
+            margin-bottom: 10px;
+        }
+    }
+
+    /* karachi weather ki styling khatam */
+
+     /* chatbot styling start */
+     #chatContainer {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 350px;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 9999;
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    #chatbox {
+        padding: 10px;
+        height: 300px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    #userInput {
+        width: calc(100% - 90px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    button01 {
+        padding: 5px 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #1d72ff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        height: 38px;
+    }
+
+    button01:hover {
+        background-color: black;
+    }
+
+    #helpButton {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        padding: 10px 15px;
+        background-color: #1d72ff;
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 13px;
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 9998;
+    }
+
+    #helpButton:hover {
+        background-color: #000000;
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .closeButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    /* chatbot styling khatam */
+</style>
+
+<body class="bg-1">
+
+     <!-- chatbot start -->
+ <div id="chatContainer">
+    <button class="closeButton" onclick="closeChat()">×</button>
+    <div id="chatbox"></div>
+    <div style="display: flex; padding: 10px;">
+        <input type="text" id="userInput" placeholder="Write your question...">
+        <button01 onclick="sendMessage()">Send</button01>
+    </div>
+</div>
+
+<button id="helpButton" style="font-style: italic;">Need Help</button>
+<!-- chat bot khatam -->
+    <!--================= Preloader Section Start Here =================-->
+    <div id="rts__preloader">
+        <div class="loader">SMHF <span>GLOBAL</span></div>
+    </div>
+    <!--================= Preloader End Here =================-->
+
+    <!--================= Header Section Start Here =================-->
+    <div class="anywere"></div>
+    <header id="rtsHeader">
+        <div class="navbar-sticky-mobile">
+            <div class="navbar-part navbar-part-1 navbar-part-4">
+                <div class="container">
+                    <div class="navbar-inner navbar-inner-4">
+                        <div class="header-left">
+
+
+                        </div>
+                        <a href="index.html" class="logo1">
+                            <img class="logo-default" style="height: 100px;" src="assets/images/smhf dark logo.png"
+                                alt=" SMHF GLOBAL">
+                            <img class="logo-dark" style="height: 100px;" src="assets/images/smhf logo.png"
+                                alt="SMHF GLOBAL">
+                        </a>
+
+                        <div class="header-right">
+                            <!-- karachi api Start -->
+
+                            <a href="">Karachi</a>
+                            <div>
+                                <p id="temp"></p>
+                                <p id="time"></p>
+
+                                <!-- karachi api khatam -->
+
+                                <div class="hamburger"><span></span></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-sticky">
+                <div class="navbar-part navbar-part1 sticked-navbar">
+
+                    <div class="container">
+
+                        <div class="navbar-inner navbar-inner-2">
+
+                            <a href="index.html" class="logo"><img class="logo-default" height="150px"
+                                    src="assets/images/smhf dark logo.png" alt="SMHF GLOBAL">
+                                <img class="logo-dark" height="150px" src="assets/images/smhf logo.png"
+                                    alt="SMHF GLOBAL"></a>
+                            <div class="rts-menu rts-menu1 m-0">
+                                <nav class="menus menu-toggle">
+
+                                    <ul class="nav__menu">
+
+                                        <li class="dropdown"><a class="menu-item item-1" href="/index.html">Home</a>
+
+                                        </li>
+
+                                        <li><a class="menu-item active" href="contact.html">Contact</a></li>
+
+<li><a class="menu-item active" href="about.html">About</a></li>
+                                    </ul>
+
+                                </nav>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aside class="slide-bar">
+                <div class="offset-sidebar">
+                    <a class="hamburger mobile-hamburger ml--30" href="#"><span></span></a>
+                    <div class="offset-widget offset-logo mb-30">
+                        <a href="index.html">
+                            <img src="assets/images/smhf logo.png" alt="SMHF GLOBAL">
+                        </a>
+                    </div>
+                </div>
+                <!-- side-mobile-menu start -->
+                <nav class="side-mobile-menu">
+                    <ul id="mobile-menu-active">
+
+
+                        <li><a class="mm-link" href="index.html">Home</a></li>
+                        <li><a class="mm-link" href="contact.html">Contact</a></li>
+                        <li><a class="mm-link" href="about.html">About</a></li>
+                    </ul>
+                </nav>
+                <!-- side-mobile-menu end -->
+            </aside>
+            <div class="body-overlay"></div>
+
+    </header>
+    <!--================= Header Section End Here =================-->
+
+    <!--================= Contact Section start Here =================-->
+    <div class="rts-contact-section section-gap-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-8">
+                    <div class="contact-form-area">
+                        <div class="rts-message-area mb--50">
+                            <h1 style="font-style: italic;" class="page-title">Let's see <br>
+                                How we can help</h1>
+                            <form id="myForm">
+                                <div class="row mb--20">
+                                    <div class="col-xl-6">
+                                        <div class="input-div first-child">
+                                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="input-div">
+                                            <input type="email" id="email" name="email" placeholder="Your Email"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb--20">
+                                    <div class="col-xl-12">
+                                        <div class="input-div">
+                                            <input type="text" id="subject" name="subject" placeholder="Your Subject"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea class="mb--10" id="comment" name="comment" cols="30" rows="10"
+                                    placeholder="Your Comment" required></textarea>
+                                <div class="check-option">
+                                    <input type="checkbox" id="saveInfo" name="saveInfo">
+                                    <label for="saveInfo">Save my name, email, and website in this browser for the next
+                                        time I comment.</label>
+                                </div>
+                                <button type="submit" class="post-comment-btn">Submit Now<i
+                                        class="far fa-arrow-right"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="office-information">
+                        <h3 class="side-content-title2">Office Information</h3>
+                        <div class="email-info item-info">
+                            <div class="title-icon"><img src="assets/images/icons/email-icon.svg" alt="title-icon">
+                            </div>
+                            <div class="infos">
+                                <span class="email-title info-title">Email us at</span>
+                                <a href="mailto:info@sangbad.com" class="email-address info">info@example.com</a>
+                            </div>
+                        </div>
+                        <div class="sms-info item-info">
+                            <div class="title-icon"><img src="assets/images/icons/phone-icon.svg" alt="title-icon">
+                            </div>
+                            <div class="infos">
+                                <span class="sms-title info-title">Send an sms</span>
+                                <a href="tel:+60244763842" class="sms-number info">+12345678910</a>
+                            </div>
+                        </div>
+                        <div class="address-info item-info">
+                            <div class="title-icon"><img src="assets/images/icons/location-icon.svg" alt="title-icon">
+                            </div>
+                            <div class="infos">
+                                <span class="address-title info-title">Address</span>
+                                <span class="sms-number info">Karachi <br>
+                                </span>
+                            </div>
+                        </div>
+                        <a href="#" class="site-link"><img src="assets/images/icons/web-icon.svg" alt="">
+                            https://smhfglobal.com</a>
+                        <div class="social-link-area">
+                            <h4 class="social-title">Find us here:</h4>
+                            <ul class="social-links">
+                                <li> <a href="#" class="platform"><i class="fab fa-facebook-f"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-pinterest-p"></i></a>
+                                </li>
+                                <li><a href="#" class="platform"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-vimeo-v"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=================Contact Section End Here =================-->
+
+
+    <!--================= Map Section End Here =================-->
+    <div class="mapouter1">
+        <div class="gmap_canvas1"><iframe class="gmap_iframe1" frameborder="0" scrolling="no" marginheight="0"
+                marginwidth="0"
+                src="https://maps.google.com/maps?width=816&amp;height=414&amp;hl=en&amp;q=sir syed ahmed khan university karachi&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a
+                href="https://sprunkiplay.com/"></a></div>
+        <!--================= Map Section End Here =================-->
+
+
+
+        <!--================= Footer Start Here =================-->
+        <div class="footer1">
+            <div class="container">
+                <div class="footer-inner">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <div class="footer-logo"><img class="logo-default"
+                                        src="assets/images/smhf dark logo.png" alt="smhf">
+                                    <img class="logo-dark" src="assets/images/smhf logo.png" alt="smhf">
+                                </div>
+                                <p class="text">When an unknown printer took scrambled it to make specimen book not only
+                                    five.</p>
+                                <a href="sign-up.html" class="find-us">Find us here <i
+                                        class="far fa-long-arrow-right"></i></a>
+                                <ul class="social-links">
+                                    <li> <a href="#" class="platform"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li> <a href="#" class="platform"><i class="fab fa-pinterest-p"></i></a>
+                                    </li>
+                                    <li><a href="#" class="platform"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li> <a href="#" class="platform"><i class="fab fa-vimeo-v"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h3 class="footer-widget-title">Categories</h3>
+                                <ul class="widget-items cata-widget">
+
+
+                                    <li class="widget-list-item"><a href="#technology">Technology</a></li>
+
+                                    <li class="widget-list-item"><a href="#business">Business</a></li>
+
+                                    <li class="widget-list-item"><a href="#world">World</a></li>
+
+
+                                    <li class="widget-list-item"><a href="#sports">Sports</a></li>
+                                    <li class="widget-list-item"><a href="#entertainment">Entertainment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h3 class="footer-widget-title">Recent Posts</h3>
+                                <div class="recent-post">
+                                    <div class="picture"><a href=""><img height="92px" src="assets/images/footer/1.jpeg"
+                                                alt="side-post-image"></a></div>
+                                    <div class="content">
+                                        <div class="recent-post-title"><a href="#0">Asia Cup cricket tournament it is
+                                                scheduled in October 2025. </a>
+                                        </div>
+                                        <a href="#" class="post-author item"><img class="span-icon"
+                                                src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                    </div>
+                                </div>
+                                <div class="recent-post">
+                                    <div class="picture"><a href=""><img width="72px" height="90px"
+                                                src="assets/images/footer/2.jpeg" alt="side-post-image"></a></div>
+                                    <div class="content">
+                                        <div class="recent-post-title"><a href="#0">A judge followed the
+                                                prosecutors is not jail time etc to Donald Trump
+                                            </a>
+                                        </div>
+                                        <a href="" class="post-author item"><img class="span-icon"
+                                                src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom-area">
+                    <span class="copyright">© 2025 All rights reserved <span class="separator">|</span> SMHF GLOBAL
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--================= Footer End Here =================-->
+
+        <!-- 
+       Color switcher
+    -->
+        <div class="modal-sidebar-scroll rts-dark-light">
+            <ul>
+                <li><span>Dark</span><i class="rts-go-dark fal fa-moon"></i></li>
+                <li><span>Light</span><i class="rts-go-light far fa-sun"></i></li>
+            </ul>
+        </div>
+
+
+        <!--================= Scroll to Top Start =================-->
+        <div class="scroll-top-btn"><i class="fas fa-angle-up arrow-up"></i><i class="fas fa-circle-notch"></i></div>
+        <!--================= Scroll to Top End =================-->
+
+        <!--================= Jquery latest version =================-->
+        <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+        <!--================= Bootstrap latest version =================-->
+        <script src="assets/js/vendors/bootstrap.min.js"></script>
+        <!--================= Swiper Slider =================-->
+        <script src="assets/js/vendors/swiper-bundle.min.js"></script>
+        <!--================= Jquery latest version =================-->
+        <script src="assets/js/vendors/metisMenu.min.js"></script>
+        <!--================= Jquery latest version =================-->
+        <script src="assets/js/vendors/rtsmenu.js"></script>
+        <!--================= Jquery latest version =================-->
+        <script src="assets/js/vendors/jquery.magnific-popup.min.js"></script>
+        <!--================= Main Script =================-->
+        <script src="assets/js/main.js"></script>
+        <!-- form  ki json script -->
+        <script>
+            function handleSubmit(event) {
+                event.preventDefault();
+
+                // Validate inputs
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value.trim();
+                const comment = document.getElementById('comment').value.trim();
+
+                if (!name || !email || !subject || !comment) {
+                    alert('All fields are required!');
+                    return;
+                }
+
+                // Collect form data
+                const data = new FormData(event.target);
+                const value = Object.fromEntries(data.entries());
+                const jsonData = JSON.stringify(value);
+
+                console.log(jsonData);
+
+                // Store data in local storage
+                localStorage.setItem('formData', jsonData);
+
+                // Redirect to the display page
+                window.location.href = 'display.html';
+            }
+
+            // Attach event listener to the form
+            const form = document.getElementById('myForm');
+            form.addEventListener('submit', handleSubmit);
+        </script>
+
+        <!-- form  ki json script khattam -->
+
+        <!-- karachi weather ki script start -->
+        <script>
+            async function fetchWeather() {
+                const apiKey = "0515fa3a97c1dd00f5313a2d038a0a24"; // Yahan apni OpenWeatherMap ki API key daalain.
+                const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&units=metric&appid=${apiKey}`;
+                try {
+                    const response = await fetch(weatherUrl);
+                    const data = await response.json();
+
+                    // Weather details
+                    const location = data.name;
+                    const temp = data.main.temp;
+                    const description = data.weather[0].description;
+
+                    // Time details
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                    });
+
+                    // Display on page
+
+                    document.getElementById('temp').innerText = ` ${temp}°C`;
+
+                    document.getElementById('time').innerText = ` ${timeString}`;
+                } catch (error) {
+                    document.getElementById('location').innerText = "Error fetching data.";
+                }
+            }
+
+            fetchWeather();
+
+            // Update time every second
+            setInterval(() => {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                });
+                document.getElementById('time').innerText = `${timeString}`;
+            }, 1000);
+        </script>
+        <!-- karachi weather ki script khatam -->
+
+        <!-- chatbot script start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function sendMessage() {
+            const userInput = $('#userInput');
+            const chatbox = $('#chatbox');
+    
+            const userMessage = userInput.val().trim();
+            if (userMessage) {
+                chatbox.append(`<div class="user-message"><strong>You:</strong> ${userMessage}</div>`);
+                const botResponse = getBotResponse(userMessage);
+                chatbox.append(`<div class="bot-message"><strong>Bot:</strong> ${botResponse}</div>`);
+                userInput.val('');
+                chatbox.scrollTop(chatbox[0].scrollHeight); // Scroll to the bottom
+            }
+        }
+    
+        function getBotResponse(input) {
+            const lowerInput = input.toLowerCase().trim();
+    
+            // Navigation handling
+            if (lowerInput === "move home") {
+                redirectToPage("index.html");
+                return "We are moving you to the Home page.";
+            } else if (lowerInput === "move about") {
+                redirectToPage("about.html");
+                return "We are moving you to the About page.";
+            } else if (lowerInput === "move contact") {
+                redirectToPage("contact.html");
+                return "We are moving you to the Contact page.";
+            }
+    
+         // General responses (20 to 25 added)
+         if (lowerInput.includes("hello")) {
+            return "Hello! How are you?";
+        } else if (lowerInput.includes("what is smhf")) {
+            return "SMHF is a news platform providing the latest updates.";
+        } else if (lowerInput.includes("contact")) {
+            return "You can contact us via the Contact Us page.";
+        } else if (lowerInput.includes("help")) {
+            return "How can I assist you? Please ask your question.";
+        } else if (lowerInput.includes("who are you")) {
+            return "I am a chatbot created to assist you with information about SMHF.";
+        } else if (lowerInput.includes("what's new")) {
+            return "Check out the latest updates on our homepage!";
+        } else if (lowerInput.includes("how are you")) {
+            return "I'm doing great, thank you for asking!";
+        } else if (lowerInput.includes("news today")) {
+            return "Today's top news is available on our homepage.";
+        } else if (lowerInput.includes("where are you located")) {
+            return "We are based in New York, but we serve readers worldwide.";
+        } else if (lowerInput.includes("who founded smhf")) {
+            return "SMHF was founded by a group of experienced journalists and digital experts.";
+        } else if (lowerInput.includes("what topics do you cover")) {
+            return "We cover politics, technology, entertainment, health, and more.";
+        } else if (lowerInput.includes("how can I subscribe")) {
+            return "You can subscribe to our newsletter on our website.";
+        } else if (lowerInput.includes("do you have a mobile app")) {
+            return "We currently do not have a mobile app, but our site is mobile-friendly!";
+        } else if (lowerInput.includes("how can I contribute")) {
+            return "You can contribute by submitting articles or news tips through our platform.";
+        } else if (lowerInput.includes("can I advertise on your site")) {
+            return "Yes, we offer advertising opportunities on SMHF. Visit the 'Advertise with Us' page for more info.";
+        } else if (lowerInput.includes("what makes smhf different")) {
+            return "SMHF stands out by providing accurate, unbiased news across a wide range of topics.";
+        } else if (lowerInput.includes("how often is news updated")) {
+            return "We update our news regularly, so you always have access to the latest information.";
+        } else if (lowerInput.includes("can I read smhf in other languages")) {
+            return "Currently, SMHF is available in English, but we are working to expand language support.";
+        } else if (lowerInput.includes("how do I contact you")) {
+            return "You can contact us through our Contact Us page. We’d love to hear from you!";
+        } else if (lowerInput.includes("do you offer podcasts")) {
+            return "Yes, we have podcasts on a variety of topics. Check them out on our website!";
+        } else if (lowerInput.includes("is smhf free")) {
+            return "Yes, SMHF is completely free to access. You can read articles without any subscription.";
+        } else if (lowerInput.includes("what's trending")) {
+            return "You can find the trending news on our homepage, updated regularly.";
+        } else if (lowerInput.includes("how do I report an issue")) {
+            return "To report an issue, please visit the Contact Us page for support.";
+        } else {
+            return "Sorry, I can't answer that question. Please visit the SMHF website for more information.";
+        }
+    }
+    
+        function redirectToPage(pageUrl) {
+            console.log(`Redirecting to: ${pageUrl}`);
+            window.location.href = pageUrl;
+        }
+    
+        function closeChat() {
+            $('#chatContainer').css('animation', 'fadeOut 0.3s ease forwards');
+            setTimeout(() => {
+                $('#chatContainer').hide();
+                $('#helpButton').show();
+            }, 300);
+        }
+    
+        $(document).ready(function () {
+            // Chat toggle button
+            $('#helpButton').click(function () {
+                $('#chatContainer').toggle();
+                if ($('#chatContainer').is(':visible')) {
+                    $('#chatContainer').css('animation', 'fadeIn 0.3s ease');
+                    $(this).hide();
+                }
+            });
+    
+            // Send message on Enter key
+            $('#userInput').keypress(function (e) {
+                if (e.which === 13) {
+                    sendMessage();
+                }
+            });
+    
+            // Close chat on button click
+            $('#closeChatBtn').click(function () {
+                closeChat();
+            });
+        });
+    </script>
+    
+    <!-- chatbot script khatam -->
+
+</body>
+
+
+</html>

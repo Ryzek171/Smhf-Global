@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en" class="darkmode" data-theme="light">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMHF GLOBAL</title>
+    <!--================= Favicon =================-->
+    <link rel="apple-touch-icon" href="assets/images/smhf dark logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/smhf dark logo.png">
+    <!--================= Bootstrap V5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <!--================= Font Awesome 5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/all.min.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
+    <!--================= Magnific popup Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/magnific-popup.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/magnific.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
+    <!--================= Swiper Slider Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/swiper.min.css">
+    <!--================= Mobile Menu Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/metisMenu.css">
+    <!--================= Main Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/rtsmenu.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    /* logo ki styling */
+    .logo1 {
+        width: 200px;
+        /* Logo size adjust karne ke liye */
+        margin-right: auto;
+        /* Logo ko left corner par le jane ke liye */
+    }
+
+
+
+    /* logo styling khatam */
+
+    /* karachi weather ki styling */
+    .container01 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 5px;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+
+    #temp {
+        font-size: 15px;
+        margin: 0;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+    #time {
+        font-size: 15x;
+        margin: 2px 0 0;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+    @media screen and (max-width: 320px) {
+        .container01 {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        a {
+            margin-bottom: 10px;
+        }
+    }
+
+    @media screen and (max-width: 513px) {
+        .container01 {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        a {
+            margin-bottom: 10px;
+        }
+    }
+
+    /* karachi weather ki styling khatam */
+
+
+
+
+    .video-section {
+        text-align: center;
+        margin: 0px;
+
+    }
+
+    .video-section video {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    section {
+        padding: 20px;
+        border-bottom: 2px solid #ffefef;
+    }
+
+    section h2 {
+        font-size: 24px;
+        color: #000000;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    section h2.highlight {
+        background-color: #ffcc00;
+        color: #ffffff;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .news-item {
+        margin: 15px 0;
+        background: rgb(248, 5, 204);
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-item h3 {
+        font-size: 18px;
+        color: #ffffff;
+
+    }
+
+    @keyframes highlightAnimation {
+        0% {
+            background-color: #ffcc00;
+        }
+
+        100% {
+            background-color: #ffffff;
+        }
+    }
+
+
+    /* modal stying start */
+    /* General Styling for Auth Button */
+    .auth-btn {
+        background-color: #0950ea;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        position: fixed;
+        top: 50px;
+        left: 270px;
+        /* Moved to the left corner */
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+
+    }
+
+    .auth-btn:hover {
+        background-color: #e808ec;
+        color: #fbfbfb;
+    }
+
+    .auth-btn.logout {
+        background-color: #0a3ead;
+        color: #ebebeb;
+    }
+
+    .auth-btn.logout:hover {
+        background-color: #e808ec;
+        color: #fbfbfb;
+    }
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.4);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .modal-content {
+        background-color: #0e7cea;
+        margin: auto;
+        padding: 30px;
+        border: 2px solid transparent;
+        border-radius: 15px;
+        width: 80%;
+        max-width: 500px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Form Styling */
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #333;
+    }
+
+    /* Welcome Text Styling */
+    .welcome-user {
+        color: #f60bb7;
+        font-size: 15px;
+        position: fixed;
+        top: 80px;
+        left: 270px;
+        /* Moved below the auth button */
+        text-align: left;
+        font-weight: bold;
+        /* Bold text */
+        font-style: italic;
+        /* Italic text */
+    }
+
+    /* Responsive Styling for 320x513 */
+    @media (max-width: 320px) {
+        .modal-content {
+            width: 90%;
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .auth-btn {
+            font-size: 9px;
+            padding: 5px 12px;
+            top: 5px;
+            left: 15px;
+            /* Adjusted for small screens */
+        }
+
+        .close {
+            font-size: 20px;
+            top: 5px;
+            right: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        input[type="submit"] {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+
+        .welcome-user {
+            font-size: 12px;
+            top: 40px;
+            left: 10px;
+            /* Adjusted for better alignment on small screens */
+        }
+    }
+
+
+    /* modal styling khatam */
+
+    /* chatbot styling start */
+    #chatContainer {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 350px;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 9999;
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    #chatbox {
+        padding: 10px;
+        height: 300px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    #userInput {
+        width: calc(100% - 90px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    button01 {
+        padding: 5px 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #1d72ff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        height: 38px;
+    }
+
+    button01:hover {
+        background-color: black;
+    }
+
+    #helpButton {
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        padding: 10px 15px;
+        background-color: #1d72ff;
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 13px;
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 9998;
+    }
+
+    #helpButton:hover {
+        background-color: #000000;
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .closeButton {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    /* chatbot styling khatam */
+
+    /* new api styling start */
+    .news-item {
+        border: 1px solid #ddd !important;
+        border-radius: 10px !important;
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+        background-color: #fff !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+        height: auto !important;
+    }
+
+    .news-item img {
+        width: 100% !important;
+        height: 250px !important;
+        object-fit: cover !important;
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .news-item h3 {
+        font-size: 16px !important;
+        margin: 8px 0 !important;
+    }
+
+    .news-item p {
+        font-size: 14px !important;
+        color: #555 !important;
+        max-height: 40px !important;
+        /* Limit description height */
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .news-item a {
+        display: inline-block !important;
+        margin-top: 8px !important;
+        padding: 6px 10px !important;
+        background-color: #1d72ff !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        border-radius: 5px !important;
+        font-size: 12px !important;
+    }
+
+    h2 {
+        font-size: 20px !important;
+        margin-top: 30px !important;
+        color: #1d72ff !important;
+        text-align: center !important;
+    }
+
+    h2.highlight {
+        color: #ff5722 !important;
+        text-decoration: underline !important;
+        transition: all 0.5s ease !important;
+    }
+
+    section {
+        margin: 20px 10px !important;
+    }
+
+    /* Mobile Styling (Specific for 320x481 screens) */
+    @media screen and (max-width: 320px) and (max-height: 481px) {
+        .news-item {
+            height: 200px !important;
+            /* Restrict container height */
+            overflow: hidden !important;
+            /* Hide extra content */
+            margin-bottom: 10px !important;
+        }
+
+        .news-item img {
+            height: 100px !important;
+            /* Smaller image height */
+        }
+
+        .news-item h3 {
+            font-size: 14px !important;
+            margin: 5px 0 !important;
+        }
+
+        .news-item p {
+            font-size: 12px !important;
+            max-height: 30px !important;
+            /* Shorter description height */
+        }
+
+        .news-item a {
+            font-size: 10px !important;
+            padding: 5px 8px !important;
+        }
+
+        h2 {
+            font-size: 18px !important;
+            margin-top: 20px !important;
+        }
+
+        section {
+            margin: 10px 5px !important;
+        }
+
+        body {
+            padding: 0 5px !important;
+            /* Adjust side padding for small screens */
+        }
+    }
+
+    /* news api styling khatam */
+</style>
+
+<body class="bg-1" onload="displayUserName()">
+
+    <!-- chatbot start -->
+    <div id="chatContainer">
+        <button class="closeButton" onclick="closeChat()">×</button>
+        <div id="chatbox"></div>
+        <div style="display: flex; padding: 10px;">
+            <input type="text" id="userInput" placeholder="Write your question...">
+            <button01 onclick="sendMessage()">Send</button01>
+        </div>
+    </div>
+
+    <button id="helpButton" style="font-style: italic;">Need Help</button>
+    <!-- chat bot khatam -->
+    <!--================= Preloader Section Start Here =================-->
+    <div id="rts__preloader">
+        <div class="loader">SMHF Global</div>
+    </div>
+    <!--================= Preloader End Here =================-->
+
+    <!--================= Header Section Start Here =================-->
+    <div class="anywere"></div>
+    <header id="rtsHeader">
+        <div class="navbar-sticky-mobile">
+            <div class="navbar-part navbar-part-1 navbar-part-4">
+                <div class="container">
+                    <div class="navbar-inner navbar-inner-4">
+                        <div class="header-left">
+
+                            <div
+                                class="header-action-items header-action-items-2 header-action-items-3 header-action-items-first">
+
+                            </div>
+                        </div>
+
+                        <a href="index.html" class="logo1">
+                            <img class="logo-default" style="height: 100px;" src="assets/images/smhf dark logo.png"
+                                alt=" SMHF GLOBAL">
+                            <img class="logo-dark" style="height: 100px;" src="assets/images/smhf logo.png"
+                                alt="SMHF GLOBAL">
+                        </a>
+
+
+
+                        <div class="header-right">
+                            <!-- karachi api Start -->
+                            <div class="container01">
+                                <a href="">Karachi</a>
+                                <div>
+                                    <p id="temp"></p>
+                                    <p id="time"></p>
+                                </div>
+                            </div>
+                            <!-- karachi api khatam -->
+                            <!-- register button and welcome guest  start-->
+                            <div class="welcome-user" id="welcomeUser">Welcome, Guest!</div>
+                            <button class="auth-btn" id="authBtn">Register</button>
+                            <!-- register button and welcome guest  khatam-->
+
+                            <!-- Modal start-->
+                            <div id="registerModal" class="modal">
+
+                                <div class="modal-content">
+                                    <h2 style="font-style: italic;">Registration</h2>
+                                    <span class="close" onclick="closeModal()">&times;</span>
+                                    <form id="registerForm">
+                                        <label style="font-style: italic;" for="firstName">First Name:</label>
+                                        <input style="font-style: italic;" type="text" id="firstName" name="firstName"
+                                            required>
+                                        <label style="font-style: italic;" for="email">Email:</label>
+                                        <input style="font-style: italic;" type="email" id="email" name="email"
+                                            required>
+                                        <label style="font-style: italic;" for="password">Password:</label>
+                                        <input style="font-style: italic;" type="password" id="password" name="password"
+                                            required>
+                                        <label style="font-style: italic;" for="confirmPassword">Confirm
+                                            Password:</label>
+                                        <input style="font-style: italic;" type="password" id="confirmPassword"
+                                            name="confirmPassword" required>
+                                        <input style="font-style: italic;" type="submit" value="Register">
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- modal khatam -->
+
+                            <div class="hamburger"><span></span></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-sticky">
+            <div class="navbar-part navbar-part1 sticked-navbar">
+                <div class="container">
+                    <div class="navbar-inner navbar-inner-2">
+                        <a href="index.html" class="logo"><img class="logo-default" height="150 px"
+                                src="assets/images/smhf dark logo.png" alt="smhf">
+                            <img class="logo-dark" height="150 px" src="assets/images/smhf logo.png" alt="smhf"></a>
+                        <div class="rts-menu rts-menu1 m-0">
+                            <nav class="menus menu-toggle">
+                                <ul class="nav__menu">
+                                    <li class="dropdown"><a class="menu-item item-1 active" href="#">Home</a>
+
+                                    </li>
+
+
+                                    <!-- catogery start -->
+
+                                    <li class="dropdown"><a class="menu-item" href="#">Catogery</a>
+                                        <ul>
+                                            <li class="flyout-right flyout"><a class="flyout-link"
+                                                    href="#business">Business</a></li>
+                                            <li class="flyout-right flyout"><a class="flyout-link"
+                                                    href="#world">World</a></li>
+
+                                            <li class="flyout-right flyout"><a class="flyout-link"
+                                                    href="#entertainment">Entertainment</a></li>
+
+                                            <li class="flyout-right flyout"><a class="flyout-link"
+                                                    href="#sports">Sports</a></li>
+
+                                            <li class="flyout-right flyout"><a class="flyout-link"
+                                                    href="#technology">Technology</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- catogery khatam -->
+
+
+                                    <li><a class="menu-item" href="contact.html">Contact</a></li>
+                                    <li><a class="menu-item" href="about.html">About</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aside class="slide-bar">
+            <div class="offset-sidebar">
+                <a class="hamburger mobile-hamburger ml--30" href="#"><span></span></a>
+                <div class="offset-widget offset-logo mb-30">
+                    <a href="index.html">
+                        <img src="assets/images/smhf dark logo.png" alt="smhf">
+                    </a>
+                </div>
+            </div>
+            <!-- side-mobile-menu start -->
+            <nav class="side-mobile-menu">
+                <ul id="mobile-menu-active">
+                    <li class="has-dropdown firstlvl">
+                        <a class="mm-link" href="index.html">Home</a>
+
+                    </li>
+                    <!-- catogery start -->
+
+                    <li class="dropdown"><a class="menu-item" href="#">Catogery</a>
+                        <ul>
+                            <li class="flyout-right flyout"><a class="flyout-link" href="#business">Business</a></li>
+                            <li class="flyout-right flyout"><a class="flyout-link" href="#world">World</a></li>
+
+                            <li class="flyout-right flyout"><a class="flyout-link"
+                                    href="#entertainment">Entertainment</a></li>
+
+                            <li class="flyout-right flyout"><a class="flyout-link" href="#sports">Sports</a></li>
+
+                            <li class="flyout-right flyout"><a class="flyout-link" href="#technology">Technology</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- catogery khatam -->
+
+                    <li><a class="mm-link" href="contact.html">Contact</a></li>
+                    <li><a class="mm-link" href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <!-- side-mobile-menu end -->
+
+
+
+    </header>
+    <!--================= Header Section End Here =================-->
+
+    <!--================= Main Post Section Start Here =================-->
+    <div class="rts-post-section pt--15" data-wow-offset="5">
+        <div class="container">
+            <div class="row no-gutters justify-content-center">
+                <div class="col-xl-8 col-md-12">
+                    <div class="banner-2">
+                        <div class="swiper bannerSlidehome">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="banner-single banner-single-1">
+                                        <div class="overlay"></div>
+                                        <div class="container">
+                                            <div class="banner-content-1">
+                                                <a href="#" class="content-catagory-tag">Travel</a>
+                                                <div class="contents">
+                                                    <div class="content-title1"><a href="news-details.html">
+                                                            "Makkah: The Heart of Faith, the Soul of Unity."</a></div>
+                                                    <div class="content-bottom-info mb--25">
+                                                        <a href="author.html" class="content-author item"><img
+                                                                src="assets/images/user.svg" alt="user-icon">Hassan
+                                                        </a>
+                                                        <span class="content-date item"><img
+                                                                src="assets/images/date.svg" alt="date-icon">January
+                                                            5, 2025</span>
+                                                    </div>
+                                                </div>
+                                                <a href="#0" class="border-btn">Read
+                                                    Story</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <button id="helpButton" class="button01">Need Help</button>
+                            <!-- chatbot khatam -->
+
+                            <div class="swiper-pagination-home"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                    <div class="side-post-area1">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                <div class="rts-post rts-post-medium side-post1">
+                                    <div class="banner-content-1">
+                                        <a href="catagory-details2.html" class="content-catagory-tag">Makkah</a>
+                                        <div class="contents">
+                                            <div class="content-title1"><a href="news-details.html">A sacred city, home
+                                                    to the Kaaba, welcoming millions in devotion and spiritual
+                                                    harmony.</a></div>
+                                            <div class="content-bottom-info mb--25">
+                                                <a href="author.html" class="content-author item"><img
+                                                        src="assets/images/user.svg" alt="user-icon">Hassan
+                                                </a>
+                                                <span class="content-date item"><img src="assets/images/date.svg"
+                                                        alt="date-icon">January
+                                                    5, 2025</span>
+                                            </div>
+                                        </div>
+                                        <a href="#0" class="border-btn1">Read
+                                            Story</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                <div class="rts-post rts-post-medium side-post2">
+                                    <div class="banner-content-1">
+                                        <a href="catagory-details2.html" class="content-catagory-tag">Fashion</a>
+                                        <div class="contents">
+                                            <div class="content-title1"><a href="news-details.html">Ask Amy: An
+                                                    aging
+                                                    mother ponders her legacy</a></div>
+                                            <div class="content-bottom-info mb--25">
+                                                <a href="author.html" class="content-author item"><img
+                                                        src="assets/images/user.svg" alt="user-icon">Fatima
+                                                </a>
+                                                <span class="content-date item"><img src="assets/images/date.svg"
+                                                        alt="date-icon">January
+                                                    16, 2025</span>
+                                            </div>
+                                        </div>
+                                        <a href="#0" class="border-btn1">Read
+                                            Story</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Main Post Section End Here =================-->
+
+    <!--================= Feature Section Start Here =================-->
+    <div class="rts-feature-section">
+        <div class="container">
+            <div class="swiper rts-featureSlider2">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="feature-item1" data-wow-offset=" 30">
+                            <div class="banner-content-1">
+                                <a href="catagory-details2.html" class="content-catagory-tag">Fashion</a>
+                                <div class="contents">
+                                    <div class="content-title1"><a href="news-details.html">Just Sayin': Everyone
+                                            needs
+                                            love, acceptance</a></div>
+                                    <div class="content-bottom-info mb--25">
+                                        <a href="author.html" class="content-author item">
+                                            Subhan</a>
+                                        <span class="content-date item">January
+                                            16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-picture"><a href="news-details.html"><img
+                                        src="assets/images/features-post/fashion.png" alt="post-picture"></a></div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="feature-item1">
+                            <div class="banner-content-1">
+                                <a href="catagory-details2.html" class="content-catagory-tag">Travel</a>
+                                <div class="contents">
+                                    <div class="content-title1"><a href="news-details.html">All you can eat sushi on
+                                            Long Island need to know</a></div>
+                                    <div class="content-bottom-info mb--25">
+                                        <a href="author.html" class="content-author item">
+                                            Subhan</a>
+                                        <span class="content-date item">January
+                                            16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-picture"><a href="news-details.html"><img
+                                        src="assets/images/features-post/travel.png" alt="post-picture"></a></div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="feature-item1">
+                            <div class="banner-content-1">
+                                <a href="catagory-details2.html" class="content-catagory-tag">Fashion</a>
+                                <div class="contents">
+                                    <div class="content-title1"><a href="news-details.html">Aurora FC stays unbeaten
+                                            with 3-1 win Chicago City</a></div>
+                                    <div class="content-bottom-info mb--25">
+                                        <a href="author.html" class="content-author item">
+                                            Subhan</a>
+                                        <span class="content-date item">January
+                                            16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-picture"><a href="news-details.html"><img
+                                        src="assets/images/features-post/fashion.png" alt="post-picture"></a></div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="feature-item1">
+                            <div class="banner-content-1">
+                                <a href="catagory-details2.html" class="content-catagory-tag">Sports</a>
+                                <div class="contents">
+                                    <div class="content-title1"><a href="news-details.html">Ask Amy: An
+                                            aging
+                                            mother ponders</a></div>
+                                    <div class="content-bottom-info mb--25">
+                                        <a href="author.html" class="content-author item">
+                                            Subhan</a>
+                                        <span class="content-date item">January
+                                            16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-picture"><a href="news-details.html"><img
+                                        src="assets/images/features-post/sports.png" alt="post-picture"></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= background video =================-->
+
+    <!--================= background video end =================-->
+    <div class="rts-post-section recent-post" data-wow-offset="5">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-md-12">
+                    <div class="news-type-tag">
+                        <div class="type-tag-left">
+                            <div class="content1">
+                                <a href="#">RECENT STORIES</a>
+                            </div>
+                            <span class="content-date item">Sunday, January
+                                16</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="row no-gutters2">
+                                <div class="col-xl-5 col-md-12">
+                                    <div class="side-post-area2">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                                <div class="feature-item1">
+                                                    <div class="banner-content-1">
+                                                        <a href="catagory-details2.html"
+                                                            class="content-catagory-tag">FASHION</a>
+                                                        <div class="contents">
+                                                            <div class="content-title1"><a
+                                                                    href="news-details.html">Judge issues
+                                                                    stunning acquittal of contractor</a></div>
+                                                            <div class="content-bottom-info mb--25">
+                                                                <a href="author.html" class="content-author item">
+                                                                    Subhan</a>
+                                                                <span class="content-date item">January
+                                                                    16, 2025</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feature-picture"><a href="news-details.html"><img
+                                                                src="assets/images/side-post/image-3.png"
+                                                                alt="post-picture"></a></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                                <div class="feature-item1">
+                                                    <div class="banner-content-1">
+                                                        <a href="catagory-details2.html"
+                                                            class="content-catagory-tag">LIFESTYLE</a>
+                                                        <div class="contents">
+                                                            <div class="content-title1"><a
+                                                                    href="news-details.html">Their loss to the NY
+                                                                    Yankees in 13 innings</a>
+                                                            </div>
+                                                            <div class="content-bottom-info mb--25">
+                                                                <a href="author.html" class="content-author item">
+                                                                    Subhan</a>
+                                                                <span class="content-date item">January
+                                                                    16, 2025</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feature-picture"><a href="news-details.html"><img
+                                                                src="assets/images/side-post/image-4.png"
+                                                                alt="post-picture"></a></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                                <div class="feature-item1">
+                                                    <div class="banner-content-1">
+                                                        <a href="catagory-details.html"
+                                                            class="content-catagory-tag">FOOTBALL</a>
+                                                        <div class="contents">
+                                                            <div class="content-title1"><a
+                                                                    href="news-details.html">Longtime
+                                                                    school
+                                                                    librarian loses job despite public</a></div>
+                                                            <div class="content-bottom-info mb--25">
+                                                                <a href="author.html" class="content-author item">
+                                                                    Subhan</a>
+                                                                <span class="content-date item">January
+                                                                    16, 2025</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feature-picture"><a href="news-details.html"><img
+                                                                src="assets/images/side-post/image-5.png"
+                                                                alt="post-picture"></a></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                                <div class="feature-item1">
+                                                    <div class="banner-content-1">
+                                                        <a href="catagory-details2.html"
+                                                            class="content-catagory-tag">POLITICS</a>
+                                                        <div class="contents">
+                                                            <div class="content-title1"><a
+                                                                    href="news-details.html">Campaign:
+                                                                    ‘I’m
+                                                                    really hoping that this isn’t end</a></div>
+                                                            <div class="content-bottom-info mb--25">
+                                                                <a href="" class="content-author item">
+                                                                    Hassan </a>
+                                                                <span class="content-date item">January
+                                                                    16, 2025</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feature-picture"><a href="news-details.html"><img
+                                                                src="assets/images/side-post/image-6.png"
+                                                                alt="post-picture"></a></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-md-6 col-sm-12">
+                                                <div class="feature-item1">
+                                                    <div class="banner-content-1">
+                                                        <a href="catagory-details2.html"
+                                                            class="content-catagory-tag">TRAVEL</a>
+                                                        <div class="contents">
+                                                            <div class="content-title1"><a href="news-details.html">A
+                                                                    Ukrainian
+                                                                    service
+                                                                    member is pictured near</a></div>
+                                                            <div class="content-bottom-info mb--25">
+                                                                <a href="author.html" class="content-author item">
+                                                                    Hassan</a>
+                                                                <span class="content-date item">January
+                                                                    16, 2025</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="feature-picture"><a href="news-details.html"><img
+                                                                src="assets/images/side-post/image-7.png"
+                                                                alt="post-picture"></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-7 col-md-12">
+                                    <div class="main-post-area1">
+                                        <div class="feature-item2">
+                                            <div class="feature-picture"><a href="news-details.html"><img
+                                                        src="assets/images/side-post/image-8.png"
+                                                        alt="post-picture"></a></div>
+                                            <div class="banner-content-1">
+                                                <a href="catagory-details2.html"
+                                                    class="content-catagory-tag">TECHNOLOGY</a>
+                                                <div class="contents">
+                                                    <div class="content-title1"><a href="news-details.html">Clint
+                                                            Frazier is
+                                                            designated
+                                                            for assignment by the Chicago Cubs before.</a></div>
+                                                    <div class="content-bottom-info mb--10">
+                                                        <a href="author.html" class="content-author item"><img
+                                                                src="assets/images/user.svg" alt="user-icon">Fatima
+                                                        </a>
+                                                        <span class="content-date item"><img
+                                                                src="assets/images/date.svg" alt="date-icon">January
+                                                            16, 2025</span>
+                                                    </div>
+                                                    <p class="description">There are many variations of passages of
+                                                        Lorem Ipsum
+                                                        available, but the majority have suffered alteration in some
+                                                        form, by
+                                                        injected
+                                                        humour, or randomised words which don't look.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="main-post-area2">
+                                        <div class="feature-item2">
+                                            <div class="banner-content-1">
+                                                <a href="#" class="content-catagory-tag">POPULAR</a>
+                                                <div class="contents">
+                                                    <div class="content-title1"><a href="news-details.html">The
+                                                            Billionaire
+                                                            Funding a
+                                                            Battle Against Hospital Monopolies.</a></div>
+                                                    <div class="content-bottom-info mb--10">
+                                                        <a href="author.html" class="content-author item"><img
+                                                                src="assets/images/user.svg" alt="user-icon">Jim
+                                                            Sechen</a>
+                                                        <span class="content-date item"><img
+                                                                src="assets/images/date.svg" alt="date-icon">January
+                                                            16, 2025</span>
+                                                    </div>
+                                                    <p class="description">There are many variations of passages of
+                                                        Lorem Ipsum
+                                                        available, but the majority have suffered alteration in some
+                                                        form, by
+                                                        injected
+                                                        humour, or randomised words which don't look.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-12">
+                    <div class="side-content sticky-content">
+                        <div class="type-tag-right">
+                            <a href="#">MOST POPULAR NEWS</a>
+                        </div>
+                        <div class="trending-news-area1">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-6">
+                                    <div class="feature-item1">
+                                        <div class="feature-picture"><a href="news-details.html"><img
+                                                    src="assets/images/side-post/image-9.png" alt="post-picture"></a>
+                                        </div>
+                                        <div class="banner-content-1">
+                                            <a href="catagory-details2.html" class="content-catagory-tag">LIFESTYLE</a>
+                                            <div class="contents">
+                                                <div class="content-title1"><a href="news-details.html">Business
+                                                        Losses From
+                                                        Russia Top $97 Billion as Sanctions Hit</a></div>
+                                                <div class="content-bottom-info mb--25">
+                                                    <a href="author.html" class="content-author item">
+                                                        Subhan</a>
+                                                    <span class="content-date item">January
+                                                        16, 2025</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 col-sm-6">
+                                    <div class="feature-item1">
+                                        <div class="banner-content-1">
+                                            <a href="catagory-details2.html" class="content-catagory-tag">MODERN</a>
+                                            <div class="contents">
+                                                <div class="content-title1"><a href="news-details.html">'I'm at
+                                                        the
+                                                        office.
+                                                        Why isn’t my boss?'</a></div>
+                                                <div class="content-bottom-info mb--25">
+                                                    <a href="author.html" class="content-author item">
+                                                        Subhan</a>
+                                                    <span class="content-date item">January
+                                                        16, 2025</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 col-sm-6">
+                                    <div class="feature-item1">
+                                        <div class="banner-content-1">
+                                            <a href="catagory-details2.html" class="content-catagory-tag">MUSIC</a>
+                                            <div class="contents">
+                                                <div class="content-title1"><a href="news-details.html">Pakistan's
+                                                        televangelist shock found dead at home</a></div>
+                                                <div class="content-bottom-info mb--25">
+                                                    <a href="author.html" class="content-author item">
+                                                        Subhan</a>
+                                                    <span class="content-date item">January
+                                                        16, 2025</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Main Post Section End Here =================-->
+
+    <!--================= Ads Section Start Here =================-->
+    <div class="rts-ads-section section-gap">
+        <div class="container">
+            <div class="ads">
+                <a href="#"><img src="assets/images/side-post/ads.png" alt="Ads Image"></a>
+            </div>
+        </div>
+    </div>
+    <!--================= Ads Section End Here =================-->
+
+    <!--================= Stories Section Start Here =================-->
+    <div class="rts-stories-section stories-section-2 section-gap wow fadeIn" data-wow-duration="1.5s">
+        <div class="container">
+            <div class="row justify-content-center">
+
+            </div>
+        </div>
+    </div>
+    <!--================= Stories Section End Here =================-->
+
+    <!--================= latest Section Start Here =================-->
+    <div class="rts-latest-section wow fadeIn" data-wow-duration="1.5s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-md-12">
+                    <div class="news-type-tag">
+                        <div class="type-tag-left">
+                            <div class="content1">
+                                <a href="#">MORE NEWS</a>
+                            </div>
+                            <span class="content-date item">Sunday, January
+                                16</span>
+                        </div>
+                    </div>
+                    <!-- video start -->
+                    <div class="video-section">
+                        <video autoplay muted loop>
+                            <source src="/news intro.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <!-- video khatam -->
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-6">
+                            <section id="business">
+                                <h2>Business</h2>
+                                <div class="news-items" id="business-news">
+                                    <!-- News items for Business will be displayed here -->
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-sm-6">
+                            <section id="entertainment">
+                                <h2>Entertainment</h2>
+                                <div class="news-items" id="entertainment-news">
+                                    <!-- News items for Entertainment will be displayed here -->
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-sm-6">
+                            <section id="sports">
+                                <h2>Sports</h2>
+                                <div class="news-items" id="sports-news">
+                                    <!-- News items for Sports will be displayed here -->
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-sm-6">
+                            <section id="technology">
+                                <h2>Technology</h2>
+                                <div class="news-items" id="technology-news">
+                                    <!-- News items for Technology will be displayed here -->
+                                </div>
+                            </section>
+
+                        </div>
+
+
+                        <div class="col-xl-12">
+                            <a class="view-more-news1" href="#0">Load More Stories<i
+                                    class="far fa-long-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-12">
+                    <div class="side-content sticky-content">
+                        <div class="type-tag-right">
+                            <a href="#">Get In Touch</a>
+                        </div>
+                        <ul class="social-popularity1 mb--50">
+                            <li><a class="platform">
+                                    <i class="fab fa-facebook-f facebook"></i>
+                                    <span>347 Fans</span>
+                                </a></li>
+                            <li><a class="platform">
+                                    <i class="fab fa-pinterest-p twitter"></i>
+                                    <span>174 Followers</span>
+                                </a></li>
+                            <li><a class="platform">
+                                    <i class="fab fa-linkedin-in linkedin"></i>
+                                    <span>126 Linkedin</span>
+                                </a></li>
+                            <li><a class="platform">
+                                    <i class="fab fa-dribbble dribbble"></i>
+                                    <span>403 Followers</span>
+                                </a></li>
+                            <li><a class="platform">
+                                    <i class="fab fa-youtube youtube"></i>
+                                    <span>214 Subscribers</span>
+                                </a></li>
+                        </ul>
+                        <div class="popular-stories1">
+                            <div class="type-tag-right mb--25"><a href="#">POPULAR NEWS</a></div>
+                            <div class="rts-post1 rts-post-small">
+                                <div class="post-picture"><a href="#"><img src="assets/images/latest/mask-1.png"
+                                            alt="main-post-image"></a></div>
+                                <div class="contents">
+                                    <a href="#" class="news-catagory-tag1">TRAVEL</a>
+                                    <div class="post-title"><a href="#">Long Island public golf
+                                            courses
+                                            to try</a></div>
+                                    <div class="post-bottom-info">
+                                        <span class="post-date item"><img class="span-icon" src="assets/images/date.svg"
+                                                alt="date-icon">
+                                            October 16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rts-post1 rts-post-small">
+                                <div class="post-picture"><a href="#"><img src="assets/images/latest/mask-2.png"
+                                            alt="main-post-image"></a></div>
+                                <div class="contents">
+                                    <a href="#" class="news-catagory-tag1">MUSIC</a>
+                                    <div class="post-title"><a href="#">She sought an affordable
+                                            housing.</a></div>
+                                    <div class="post-bottom-info">
+                                        <span class="post-date item"><img class="span-icon" src="assets/images/date.svg"
+                                                alt="date-icon">
+                                            November 16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rts-post1 rts-post-small">
+                                <div class="post-picture"><a href="#"><img src="assets/images/latest/mask-3.png"
+                                            alt="main-post-image"></a></div>
+                                <div class="contents">
+                                    <a href="catagory-details-2.html" class="news-catagory-tag1">HEALTH</a>
+                                    <div class="post-title"><a href="#">Calhoun can't rally this
+                                            time in
+                                            state</a></div>
+                                    <div class="post-bottom-info">
+                                        <span class="post-date item"><img class="span-icon" src="assets/images/date.svg"
+                                                alt="date-icon">
+                                            January 16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rts-post1 rts-post-small">
+                                <div class="post-picture"><a href="#"><img src="assets/images/latest/mask-4.png"
+                                            alt="main-post-image"></a></div>
+                                <div class="contents">
+                                    <a href="#" class="news-catagory-tag1">FASHION</a>
+                                    <div class="post-title"><a href="#">Free family events
+                                            activities
+                                            happening</a></div>
+                                    <div class="post-bottom-info">
+                                        <span class="post-date item"><img class="span-icon" src="assets/images/date.svg"
+                                                alt="date-icon">
+                                            January 16, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Latest Section End Here =================-->
+
+    <!--================= Read Section Start Here =================-->
+    <div class="rts-read-section1 section-gap-2 wow fadeIn" data-wow-duration="1.5s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="news-topbar">
+                        <div class="section-type-tag1"><a href="#" id="world">World</a></div>
+                        <a href="#0" class="view-achive-btn1 more-btn">See all News <i
+                                class="far fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters3">
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                    <div class="rts-post1 rts-post-medium1">
+                        <div class="post-picture">
+                            <div class="overlay"></div>
+                            <a href="#">
+                                <img src="assets/images/more/image1.png" alt="main-post-image">
+                            </a>
+                            <div class="section-content">
+                                <a href="#" class="news-catagory-tag">FASHION</a>
+                                <div class="contents">
+                                    <div class="post-title"><a href="#">Postpones tour after
+                                            syndrome
+                                            leaves</a></div>
+                                    <div class="post-bottom-info">
+                                        <a href="#" class="post-author item1">Alan Fresco</a>
+                                        <div class="post-bottom">
+                                            <span class="post-date item1">January
+                                                03, 2025</span>
+                                            <span class="post-time">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                    <div class="rts-post1 rts-post-medium1">
+                        <div class="post-picture">
+                            <div class="overlay"></div>
+                            <a href="#"><img src="assets/images/more/image2.png" alt="main-post-image"></a>
+                            <div class="section-content">
+                                <a href="#" class="news-catagory-tag">MUSIC</a>
+                                <div class="contents">
+                                    <div class="post-title"><a href="#">With ‘Jurassic’
+                                            ending,
+                                            Bryce Dallas</a></div>
+                                    <div class="post-bottom-info">
+                                        <a href="#" class="post-author item1">Barry Tone</a>
+                                        <div class="post-bottom">
+                                            <span class="post-date item1">January
+                                                03, 2025</span>
+                                            <span class="post-time">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                    <div class="rts-post1 rts-post-medium1">
+                        <div class="post-picture">
+                            <div class="overlay"></div>
+                            <a href="#"><img src="assets/images/more/image3.png" alt="main-post-image"></a>
+                            <div class="section-content">
+                                <a href="#" class="news-catagory-tag">LIFESTYLE</a>
+                                <div class="contents">
+                                    <div class="post-title"><a href="news-details.html">‘The Bachelor’ made a
+                                            ‘sideshow’</a></div>
+                                    <div class="post-bottom-info">
+                                        <a href="#" class="post-author item1">Hilari Ouse</a>
+                                        <div class="post-bottom">
+                                            <span class="post-date item1">January
+                                                03, 2025</span>
+                                            <span class="post-time">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                    <div class="rts-post1 rts-post-medium1">
+                        <div class="post-picture">
+                            <div class="overlay"></div>
+                            <a href="#"><img src="assets/images/more/image4.png" alt="main-post-image"></a>
+                            <div class="section-content">
+                                <a href="#" class="news-catagory-tag">SPORTS</a>
+                                <div class="contents">
+                                    <div class="post-title"><a href="news-details.html">Curry exploits help Warriors
+                                            level Finals</a></div>
+                                    <div class="post-bottom-info">
+                                        <a href="#" class="post-author item1">Norman Gordon</a>
+                                        <div class="post-bottom">
+                                            <span class="post-date item1">January
+                                                03, 2025</span>
+                                            <span class="post-time">1 day ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Read Section End Here =================-->
+
+    <!--================= Subscribe-banner Section Start Here =================-->
+
+
+    <!--================= Subscribe-banner Section End Here =================-->
+
+    <!--================= Footer Start Here =================-->
+    <div class="footer1">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="footer-logo"><img class="logo-default" src="assets/images/smhf dark logo.png"
+                                    alt="smhf">
+                                <img class="logo-dark" src="assets/images/smhf logo.png" alt="smhf">
+                            </div>
+                            <p class="text">When an unknown printer took scrambled it to make specimen book not only
+                                five.</p>
+                            <a href="sign-up.html" class="find-us">Find us here <i
+                                    class="far fa-long-arrow-right"></i></a>
+                            <ul class="social-links">
+                                <li> <a href="#" class="platform"><i class="fab fa-facebook-f"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-pinterest-p"></i></a>
+                                </li>
+                                <li><a href="#" class="platform"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-vimeo-v"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Categories</h3>
+                            <ul class="widget-items cata-widget">
+
+
+                                <li class="widget-list-item"><a href="#technology">Technology</a></li>
+
+                                <li class="widget-list-item"><a href="#business">Business</a></li>
+
+                                <li class="widget-list-item"><a href="#world">World</a></li>
+
+
+                                <li class="widget-list-item"><a href="#sports">Sports</a></li>
+                                <li class="widget-list-item"><a href="#entertainment">Entertainment</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Recent Posts</h3>
+                            <div class="recent-post">
+                                <div class="picture"><a href=""><img height="92px" src="assets/images/footer/1.jpeg"
+                                            alt="side-post-image"></a></div>
+                                <div class="content">
+                                    <div class="recent-post-title"><a href="#0">Asia Cup cricket tournament it is
+                                            scheduled in October 2025. </a>
+                                    </div>
+                                    <a href="#" class="post-author item"><img class="span-icon"
+                                            src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                </div>
+                            </div>
+                            <div class="recent-post">
+                                <div class="picture"><a href=""><img width="72px" height="90px"
+                                            src="assets/images/footer/2.jpeg" alt="side-post-image"></a></div>
+                                <div class="content">
+                                    <div class="recent-post-title"><a href="#0">A judge followed the
+                                            prosecutors is not jail time etc to Donald Trump
+                                        </a>
+                                    </div>
+                                    <a href="" class="post-author item"><img class="span-icon"
+                                            src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom-area">
+                <span class="copyright">© 2025 All rights reserved <span class="separator">|</span> SMHF GLOBAL
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--================= Footer End Here =================-->
+
+    <!-- 
+       Color switcher
+    -->
+    <div class="modal-sidebar-scroll rts-dark-light">
+        <ul>
+            <li><span>Dark</span><i class="rts-go-dark fal fa-moon"></i></li>
+            <li><span>Light</span><i class="rts-go-light far fa-sun"></i></li>
+        </ul>
+    </div>
+
+    <!--================= Scroll to Top Start =================-->
+    <div class="scroll-top-btn"><i class="fas fa-angle-up arrow-up"></i><i class="fas fa-circle-notch"></i></div>
+    <!--================= Scroll to Top End =================-->
+
+    <!--================= Jquery latest version =================-->
+    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <!--================= Bootstrap latest version =================-->
+    <script src="assets/js/vendors/bootstrap.min.js"></script>
+    <!--================= Wow.js =================-->
+    <script src="assets/js/vendors/wow.min.js"></script>
+    <!--================= Swiper Slider =================-->
+    <script src="assets/js/vendors/swiper-bundle.min.js"></script>
+    <!--================= Mobile Menu Plugin =================-->
+    <script src="assets/js/vendors/metisMenu.min.js"></script>
+    <!--================= Main Menu Plugin =================-->
+    <script src="assets/js/vendors/rtsmenu.js"></script>
+    <!--================= Magnefic Popup Plugin =================-->
+    <script src="assets/js/vendors/jquery.magnific-popup.min.js"></script>
+    <!--================= Main Script =================-->
+    <script src="assets/js/main.js"></script>
+
+    <!-- karachi weather ki script start -->
+    <script>
+        async function fetchWeather() {
+            const apiKey = "0515fa3a97c1dd00f5313a2d038a0a24"; // Yahan apni OpenWeatherMap ki API key daalain.
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&units=metric&appid=${apiKey}`;
+            try {
+                const response = await fetch(weatherUrl);
+                const data = await response.json();
+
+                // Weather details
+                const location = data.name;
+                const temp = data.main.temp;
+                const description = data.weather[0].description;
+
+                // Time details
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                });
+
+                // Display on page
+
+                document.getElementById('temp').innerText = ` ${temp}°C`;
+
+                document.getElementById('time').innerText = ` ${timeString}`;
+            } catch (error) {
+                document.getElementById('location').innerText = "Error fetching data.";
+            }
+        }
+
+        fetchWeather();
+
+        // Update time every second
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            });
+            document.getElementById('time').innerText = `${timeString}`;
+        }, 1000);
+    </script>
+    <!-- karachi weather ki script khatam -->
+
+    <!-- news api script start -->
+    <script>
+        const apiUrls = {
+            business: 'https://gnews.io/api/v4/top-headlines?country=pk&category=business&apikey=08f712ec6affe0f0323d4e7fda780aac',
+            entertainment: 'https://gnews.io/api/v4/top-headlines?country=pk&category=entertainment&apikey=08f712ec6affe0f0323d4e7fda780aac',
+            politics: 'https://gnews.io/api/v4/top-headlines?country=pk&category=general&apikey=08f712ec6affe0f0323d4e7fda780aac',
+            sports: 'https://gnews.io/api/v4/top-headlines?country=pk&category=sports&apikey=08f712ec6affe0f0323d4e7fda780aac',
+            technology: 'https://gnews.io/api/v4/top-headlines?country=pk&category=technology&apikey=08f712ec6affe0f0323d4e7fda780aac',
+        };
+
+        async function fetchNews(category) {
+            try {
+                const response = await fetch(apiUrls[category]);
+                const data = await response.json();
+                const newsContainer = document.getElementById(`${category}-news`);
+                newsContainer.innerHTML = ''; // Clear previous content
+
+                data.articles.forEach((article) => {
+                    const newsItem = document.createElement('div');
+                    newsItem.classList.add('news-item');
+                    newsItem.innerHTML = `
+                        <img src="${article.image || 'https://via.placeholder.com/150'}" alt="News Image">
+                        <h3>${article.title}</h3>
+                        <p>${article.description || 'No description available.'}</p>
+                        <a href="${article.url}" target="_blank">Read More</a>
+                    `;
+                    newsContainer.appendChild(newsItem);
+                });
+            } catch (error) {
+                console.error("Error fetching news:", error);
+            }
+        }
+
+        // Fetch data for each category
+        ['business', 'entertainment', 'sports', 'technology', 'politics'].forEach(fetchNews);
+
+        // Scroll and highlight functionality
+        document.querySelectorAll(".dropdown-content a").forEach(link => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute("href").substring(1); // Extract ID
+                const targetSection = document.getElementById(targetId);
+
+                // Smooth scroll to section
+                const offsetTop = targetSection.offsetTop - 20; // Adjust to stop at the right position
+                window.scrollTo({ top: offsetTop, behavior: "smooth" });
+
+                // Highlight heading
+                const targetHeading = targetSection.querySelector("h2");
+                document.querySelectorAll("section h2").forEach(h2 => h2.classList.remove("highlight"));
+                targetHeading.classList.add("highlight");
+
+                setTimeout(() => targetHeading.classList.remove("highlight"), 2000);
+            });
+        });
+    </script>
+    <!-- news api script khatam -->
+
+    <!-- modal script start -->
+    <script>
+        // Function to display username and update button text
+        function displayUserName() {
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.getElementById('welcomeUser').textContent = `Welcome, ${userName}!`;
+                document.getElementById('authBtn').textContent = 'Logout';
+                document.getElementById('authBtn').classList.add('logout');
+            }
+        }
+
+        // Function to open or close modal
+        document.getElementById('authBtn').onclick = function () {
+            if (this.textContent === 'Register') {
+                document.getElementById('registerModal').style.display = 'block';
+            } else if (this.textContent === 'Logout') {
+                localStorage.removeItem('userName');
+                document.getElementById('welcomeUser').textContent = 'Welcome, Guest!';
+                document.getElementById('authBtn').textContent = 'Register';
+                document.getElementById('authBtn').classList.remove('logout');
+            }
+        };
+
+        // Function to close modal
+        function closeModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('registerForm').onsubmit = function (e) {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password === confirmPassword) {
+                // Save username in localStorage
+                localStorage.setItem('userName', firstName);
+                closeModal();
+                displayUserName();
+
+                // SweetAlert for successful registration
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful!',
+                    text: 'Welcome ' + firstName + '!',
+                });
+
+                // Submit data to Web3Forms API
+                const formData = new FormData();
+                formData.append('access_key', 'fffea3df-bff6-490e-a228-81920be75850');
+                formData.append('firstName', firstName);
+                formData.append('email', email);
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData,
+                })
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Passwords do not match!',
+                });
+            }
+        };
+    </script>
+
+
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- modal script khatam -->
+
+    <!-- chatbot script start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function sendMessage() {
+            const userInput = $('#userInput');
+            const chatbox = $('#chatbox');
+    
+            const userMessage = userInput.val().trim();
+            if (userMessage) {
+                chatbox.append(`<div class="user-message"><strong>You:</strong> ${userMessage}</div>`);
+                const botResponse = getBotResponse(userMessage);
+                chatbox.append(`<div class="bot-message"><strong>Bot:</strong> ${botResponse}</div>`);
+                userInput.val('');
+                chatbox.scrollTop(chatbox[0].scrollHeight); // Scroll to the bottom
+            }
+        }
+    
+        function getBotResponse(input) {
+            const lowerInput = input.toLowerCase().trim();
+    
+                 // Navigation handling
+                 if (lowerInput === "move home") {
+                redirectToPage("index.html");
+                return "We are moving you to the Home page.";
+            } else if (lowerInput === "move about") {
+                redirectToPage("about.html");
+                return "We are moving you to the About page.";
+            } else if (lowerInput === "move contact") {
+                redirectToPage("contact.html");
+                return "We are moving you to the Contact page.";
+            }
+         // General responses (20 to 25 added)
+         if (lowerInput.includes("hello")) {
+            return "Hello! How are you?";
+        } else if (lowerInput.includes("what is smhf")) {
+            return "SMHF is a news platform providing the latest updates.";
+        } else if (lowerInput.includes("contact")) {
+            return "You can contact us via the Contact Us page.";
+        } else if (lowerInput.includes("help")) {
+            return "How can I assist you? Please ask your question.";
+        } else if (lowerInput.includes("who are you")) {
+            return "I am a chatbot created to assist you with information about SMHF.";
+        } else if (lowerInput.includes("what's new")) {
+            return "Check out the latest updates on our homepage!";
+        } else if (lowerInput.includes("how are you")) {
+            return "I'm doing great, thank you for asking!";
+        } else if (lowerInput.includes("news today")) {
+            return "Today's top news is available on our homepage.";
+        } else if (lowerInput.includes("where are you located")) {
+            return "We are based in New York, but we serve readers worldwide.";
+        } else if (lowerInput.includes("who founded smhf")) {
+            return "SMHF was founded by a group of experienced journalists and digital experts.";
+        } else if (lowerInput.includes("what topics do you cover")) {
+            return "We cover politics, technology, entertainment, health, and more.";
+        } else if (lowerInput.includes("how can I subscribe")) {
+            return "You can subscribe to our newsletter on our website.";
+        } else if (lowerInput.includes("do you have a mobile app")) {
+            return "We currently do not have a mobile app, but our site is mobile-friendly!";
+        } else if (lowerInput.includes("how can I contribute")) {
+            return "You can contribute by submitting articles or news tips through our platform.";
+        } else if (lowerInput.includes("can I advertise on your site")) {
+            return "Yes, we offer advertising opportunities on SMHF. Visit the 'Advertise with Us' page for more info.";
+        } else if (lowerInput.includes("what makes smhf different")) {
+            return "SMHF stands out by providing accurate, unbiased news across a wide range of topics.";
+        } else if (lowerInput.includes("how often is news updated")) {
+            return "We update our news regularly, so you always have access to the latest information.";
+        } else if (lowerInput.includes("can I read smhf in other languages")) {
+            return "Currently, SMHF is available in English, but we are working to expand language support.";
+        } else if (lowerInput.includes("how do I contact you")) {
+            return "You can contact us through our Contact Us page. We’d love to hear from you!";
+        } else if (lowerInput.includes("do you offer podcasts")) {
+            return "Yes, we have podcasts on a variety of topics. Check them out on our website!";
+        } else if (lowerInput.includes("is smhf free")) {
+            return "Yes, SMHF is completely free to access. You can read articles without any subscription.";
+        } else if (lowerInput.includes("what's trending")) {
+            return "You can find the trending news on our homepage, updated regularly.";
+        } else if (lowerInput.includes("how do I report an issue")) {
+            return "To report an issue, please visit the Contact Us page for support.";
+        } else {
+            return "Sorry, I can't answer that question. Please visit the SMHF website for more information.";
+        }
+    }
+    
+        function redirectToPage(pageUrl) {
+            console.log(`Redirecting to: ${pageUrl}`);
+            window.location.href = pageUrl;
+        }
+    
+        function closeChat() {
+            $('#chatContainer').css('animation', 'fadeOut 0.3s ease forwards');
+            setTimeout(() => {
+                $('#chatContainer').hide();
+                $('#helpButton').show();
+            }, 300);
+        }
+    
+        $(document).ready(function () {
+            // Chat toggle button
+            $('#helpButton').click(function () {
+                $('#chatContainer').toggle();
+                if ($('#chatContainer').is(':visible')) {
+                    $('#chatContainer').css('animation', 'fadeIn 0.3s ease');
+                    $(this).hide();
+                }
+            });
+    
+            // Send message on Enter key
+            $('#userInput').keypress(function (e) {
+                if (e.which === 13) {
+                    sendMessage();
+                }
+            });
+    
+            // Close chat on button click
+            $('#closeChatBtn').click(function () {
+                closeChat();
+            });
+        });
+    </script>
+    
+    <!-- chatbot script khatam -->
+
+</body>

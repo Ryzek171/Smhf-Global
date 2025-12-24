@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submitted Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .output {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .output h3 {
+            margin-top: 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="output">
+        <h3>Submitted Data:</h3>
+        <p id="outputName"></p>
+        <p id="outputEmail"></p>
+        <button id="downloadBtn">Download JSON</button>
+    </div>
+
+    <script>
+        // Retrieve the data from local storage
+        const jsonData = localStorage.getItem('formData');
+        const data = JSON.parse(jsonData);
+
+        // Display the data
+        document.getElementById('outputName').textContent = `Name: ${data.name}`;
+        document.getElementById('outputEmail').textContent = `Email: ${data.email}`;
+
+        // Set up download button
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.onclick = function() {
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'form-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+    </script>
+</body>
+</html>
