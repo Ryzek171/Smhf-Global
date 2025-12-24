@@ -162,5 +162,293 @@ body{
 </div>
 <!-- ===== END ABOUT ===== -->
 
+ <!--================= Footer Start Here =================-->
+    <div class="footer1">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <div class="footer-logo"><img class="logo-default" src="assets/images/smhf dark logo.png"
+                                    alt="smhf">
+                                <img class="logo-dark" src="assets/images/smhf logo.png" alt="smhf">
+                            </div>
+                            <p class="text">When an unknown printer took scrambled it to make specimen book not only
+                                five.</p>
+                            <a href="sign-up.html" class="find-us">Find us here <i
+                                    class="far fa-long-arrow-right"></i></a>
+                            <ul class="social-links">
+                                <li> <a href="#" class="platform"><i class="fab fa-facebook-f"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-pinterest-p"></i></a>
+                                </li>
+                                <li><a href="#" class="platform"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li> <a href="#" class="platform"><i class="fab fa-vimeo-v"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Categories</h3>
+                            <ul class="widget-items cata-widget">
+
+
+                                <li class="widget-list-item"><a href="#technology">Technology</a></li>
+
+                                <li class="widget-list-item"><a href="#business">Business</a></li>
+
+                                <li class="widget-list-item"><a href="#world">World</a></li>
+
+
+                                <li class="widget-list-item"><a href="#sports">Sports</a></li>
+                                <li class="widget-list-item"><a href="#entertainment">Entertainment</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h3 class="footer-widget-title">Recent Posts</h3>
+                            <div class="recent-post">
+                                <div class="picture"><a href=""><img height="92px" src="assets/images/footer/1.jpeg"
+                                            alt="side-post-image"></a></div>
+                                <div class="content">
+                                    <div class="recent-post-title"><a href="#0">Asia Cup cricket tournament it is
+                                            scheduled in October 2025. </a>
+                                    </div>
+                                    <a href="#" class="post-author item"><img class="span-icon"
+                                            src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                </div>
+                            </div>
+                            <div class="recent-post">
+                                <div class="picture"><a href=""><img width="72px" height="90px"
+                                            src="assets/images/footer/2.jpeg" alt="side-post-image"></a></div>
+                                <div class="content">
+                                    <div class="recent-post-title"><a href="#0">A judge followed the
+                                            prosecutors is not jail time etc to Donald Trump
+                                        </a>
+                                    </div>
+                                    <a href="" class="post-author item"><img class="span-icon"
+                                            src="assets/images/user.svg" alt="user-icon">Maryam</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom-area">
+                <span class="copyright">© 2025 All rights reserved <span class="separator">|</span> SMHF GLOBAL
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--================= Footer End Here =================-->
+
+    <!-- 
+       Color switcher
+    -->
+    <div class="modal-sidebar-scroll rts-dark-light">
+        <ul>
+            <li><span>Dark</span><i class="rts-go-dark fal fa-moon"></i></li>
+            <li><span>Light</span><i class="rts-go-light far fa-sun"></i></li>
+        </ul>
+    </div>
+
+
+    <!--================= Scroll to Top Start =================-->
+    <div class="scroll-top-btn"><i class="fas fa-angle-up arrow-up"></i><i class="fas fa-circle-notch"></i></div>
+    <!--================= Scroll to Top End =================-->
+
+    <!--================= Jquery latest version =================-->
+    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <!--================= Bootstrap latest version =================-->
+    <script src="assets/js/vendors/bootstrap.min.js"></script>
+    <!--================= Swiper Slider =================-->
+    <script src="assets/js/vendors/swiper-bundle.min.js"></script>
+    <!--================= Jquery latest version =================-->
+    <script src="assets/js/vendors/metisMenu.min.js"></script>
+    <!--================= Jquery latest version =================-->
+    <script src="assets/js/vendors/rtsmenu.js"></script>
+    <!--================= Jquery latest version =================-->
+    <script src="assets/js/vendors/jquery.magnific-popup.min.js"></script>
+    <!--================= Main Script =================-->
+    <script src="assets/js/main.js"></script>
+
+
+
+    <!-- karachi weather ki script start -->
+    <script>
+        async function fetchWeather() {
+            const apiKey = "0515fa3a97c1dd00f5313a2d038a0a24"; // Yahan apni OpenWeatherMap ki API key daalain.
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&units=metric&appid=${apiKey}`;
+            try {
+                const response = await fetch(weatherUrl);
+                const data = await response.json();
+
+                // Weather details
+                const location = data.name;
+                const temp = data.main.temp;
+                const description = data.weather[0].description;
+
+                // Time details
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                });
+
+                // Display on page
+
+                document.getElementById('temp').innerText = ` ${temp}°C`;
+
+                document.getElementById('time').innerText = ` ${timeString}`;
+            } catch (error) {
+                document.getElementById('location').innerText = "Error fetching data.";
+            }
+        }
+
+        fetchWeather();
+
+        // Update time every second
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            });
+            document.getElementById('time').innerText = `${timeString}`;
+        }, 1000);
+    </script>
+    <!-- karachi weather ki script khatam -->
+
+    <!-- chatbot script start -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function sendMessage() {
+            const userInput = $('#userInput');
+            const chatbox = $('#chatbox');
+
+            const userMessage = userInput.val().trim();
+            if (userMessage) {
+                chatbox.append(`<div class="user-message"><strong>You:</strong> ${userMessage}</div>`);
+                const botResponse = getBotResponse(userMessage);
+                chatbox.append(`<div class="bot-message"><strong>Bot:</strong> ${botResponse}</div>`);
+                userInput.val('');
+                chatbox.scrollTop(chatbox[0].scrollHeight); // Scroll to the bottom
+            }
+        }
+
+        function getBotResponse(input) {
+            const lowerInput = input.toLowerCase().trim();
+
+            // Navigation handling
+            if (lowerInput === "move home") {
+                redirectToPage("index.html");
+                return "We are moving you to the Home page.";
+            } else if (lowerInput === "move about") {
+                redirectToPage("about.html");
+                return "We are moving you to the About page.";
+            } else if (lowerInput === "move contact") {
+                redirectToPage("contact.html");
+                return "We are moving you to the Contact page.";
+            }
+            
+            // General responses (20 to 25 added)
+            if (lowerInput.includes("hello")) {
+                return "Hello! How are you?";
+            } else if (lowerInput.includes("what is smhf")) {
+                return "SMHF is a news platform providing the latest updates.";
+            } else if (lowerInput.includes("contact")) {
+                return "You can contact us via the Contact Us page.";
+            } else if (lowerInput.includes("help")) {
+                return "How can I assist you? Please ask your question.";
+            } else if (lowerInput.includes("who are you")) {
+                return "I am a chatbot created to assist you with information about SMHF.";
+            } else if (lowerInput.includes("what's new")) {
+                return "Check out the latest updates on our homepage!";
+            } else if (lowerInput.includes("how are you")) {
+                return "I'm doing great, thank you for asking!";
+            } else if (lowerInput.includes("news today")) {
+                return "Today's top news is available on our homepage.";
+            } else if (lowerInput.includes("where are you located")) {
+                return "We are based in New York, but we serve readers worldwide.";
+            } else if (lowerInput.includes("who founded smhf")) {
+                return "SMHF was founded by a group of experienced journalists and digital experts.";
+            } else if (lowerInput.includes("what topics do you cover")) {
+                return "We cover politics, technology, entertainment, health, and more.";
+            } else if (lowerInput.includes("how can I subscribe")) {
+                return "You can subscribe to our newsletter on our website.";
+            } else if (lowerInput.includes("do you have a mobile app")) {
+                return "We currently do not have a mobile app, but our site is mobile-friendly!";
+            } else if (lowerInput.includes("how can I contribute")) {
+                return "You can contribute by submitting articles or news tips through our platform.";
+            } else if (lowerInput.includes("can I advertise on your site")) {
+                return "Yes, we offer advertising opportunities on SMHF. Visit the 'Advertise with Us' page for more info.";
+            } else if (lowerInput.includes("what makes smhf different")) {
+                return "SMHF stands out by providing accurate, unbiased news across a wide range of topics.";
+            } else if (lowerInput.includes("how often is news updated")) {
+                return "We update our news regularly, so you always have access to the latest information.";
+            } else if (lowerInput.includes("can I read smhf in other languages")) {
+                return "Currently, SMHF is available in English, but we are working to expand language support.";
+            } else if (lowerInput.includes("how do I contact you")) {
+                return "You can contact us through our Contact Us page. We’d love to hear from you!";
+            } else if (lowerInput.includes("do you offer podcasts")) {
+                return "Yes, we have podcasts on a variety of topics. Check them out on our website!";
+            } else if (lowerInput.includes("is smhf free")) {
+                return "Yes, SMHF is completely free to access. You can read articles without any subscription.";
+            } else if (lowerInput.includes("what's trending")) {
+                return "You can find the trending news on our homepage, updated regularly.";
+            } else if (lowerInput.includes("how do I report an issue")) {
+                return "To report an issue, please visit the Contact Us page for support.";
+            } else {
+                return "Sorry, I can't answer that question. Please visit the SMHF website for more information.";
+            }
+        }
+
+        function redirectToPage(pageUrl) {
+            console.log(`Redirecting to: ${pageUrl}`);
+            window.location.href = pageUrl;
+        }
+
+        function closeChat() {
+            $('#chatContainer').css('animation', 'fadeOut 0.3s ease forwards');
+            setTimeout(() => {
+                $('#chatContainer').hide();
+                $('#helpButton').show();
+            }, 300);
+        }
+
+        $(document).ready(function () {
+            // Chat toggle button
+            $('#helpButton').click(function () {
+                $('#chatContainer').toggle();
+                if ($('#chatContainer').is(':visible')) {
+                    $('#chatContainer').css('animation', 'fadeIn 0.3s ease');
+                    $(this).hide();
+                }
+            });
+
+            // Send message on Enter key
+            $('#userInput').keypress(function (e) {
+                if (e.which === 13) {
+                    sendMessage();
+                }
+            });
+
+            // Close chat on button click
+            $('#closeChatBtn').click(function () {
+                closeChat();
+            });
+        });
+    </script>
+
+    <!-- chatbot script khatam -->
+
+
+
 </body>
+
+
 </html>
