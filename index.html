@@ -1258,54 +1258,31 @@
                         </div>
                     </div>
                     <!-- video start -->
-                    <div class="video-section">
-                        <video autoplay muted loop>
-                            <source src="news intro.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <!-- video khatam -->
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-6">
-                            <section id="business">
-                                <h2>Business</h2>
-                                <div class="news-items" id="business-news">
-                                    <!-- News items for Business will be displayed here -->
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-6">
-                            <section id="entertainment">
-                                <h2>Entertainment</h2>
-                                <div class="news-items" id="entertainment-news">
-                                    <!-- News items for Entertainment will be displayed here -->
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-6">
-                            <section id="sports">
-                                <h2>Sports</h2>
-                                <div class="news-items" id="sports-news">
-                                    <!-- News items for Sports will be displayed here -->
-                                </div>
-                            </section>
-                        </div>
-                        <div class="col-xl-12 col-md-12 col-sm-6">
-                            <section id="technology">
-                                <h2>Technology</h2>
-                                <div class="news-items" id="technology-news">
-                                    <!-- News items for Technology will be displayed here -->
-                                </div>
-                            </section>
+                 <section id="business">
+    <h2>Business</h2>
+    <div id="business-news" class="news-items"></div>
+  </section>
 
-                        </div>
+  <section id="entertainment">
+    <h2>Entertainment</h2>
+    <div id="entertainment-news" class="news-items"></div>
+  </section>
 
+  <section id="sports">
+    <h2>Sports</h2>
+    <div id="sports-news" class="news-items"></div>
+  </section>
 
-                        <div class="col-xl-12">
-                            <a class="view-more-news1" href="#0">Load More Stories<i
-                                    class="far fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
+  <section id="technology">
+    <h2>Technology</h2>
+    <div id="technology-news" class="news-items"></div>
+  </section>
+
+  <section id="world">
+    <h2>World</h2>
+    <div id="world-news" class="news-items"></div>
+  </section>
+
                 </div>
                 <div class="col-xl-3 col-md-12">
                     <div class="side-content sticky-content">
@@ -1684,59 +1661,7 @@
     <!-- karachi weather ki script khatam -->
 
     <!-- news api script start -->
-<script>
-    const apiKey = "08f712ec6affe0f0323d4e7fda780aac";
 
-    const apiUrls = {
-        business: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=business&apikey=${apiKey}`,
-        entertainment: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=entertainment&apikey=${apiKey}`,
-        politics: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=general&apikey=${apiKey}`,
-        sports: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=sports&apikey=${apiKey}`,
-        technology: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=technology&apikey=${apiKey}`,
-    };
-
-    async function fetchNews(category) {
-        try {
-            const response = await fetch(apiUrls[category]);
-            const data = await response.json();
-            const newsContainer = document.getElementById(`${category}-news`);
-            newsContainer.innerHTML = '';
-
-            data.articles.forEach((article) => {
-                const newsItem = document.createElement('div');
-                newsItem.classList.add('news-item');
-                newsItem.innerHTML = `
-                    <img src="${article.image || 'https://via.placeholder.com/150'}" alt="News Image">
-                    <h3>${article.title}</h3>
-                    <p>${article.description || 'No description available.'}</p>
-                    <a href="${article.url}" target="_blank">Read More</a>
-                `;
-                newsContainer.appendChild(newsItem);
-            });
-        } catch (error) {
-            console.error("Error fetching news:", error);
-        }
-    }
-
-    ['business', 'entertainment', 'sports', 'technology', 'politics'].forEach(fetchNews);
-
-    document.querySelectorAll(".dropdown-content a").forEach(link => {
-        link.addEventListener("click", (event) => {
-            event.preventDefault();
-            const targetId = link.getAttribute("href").substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            const offsetTop = targetSection.offsetTop - 20;
-            window.scrollTo({ top: offsetTop, behavior: "smooth" });
-
-            const targetHeading = targetSection.querySelector("h2");
-            document.querySelectorAll("section h2").forEach(h2 => h2.classList.remove("highlight"));
-            targetHeading.classList.add("highlight");
-
-            setTimeout(() => targetHeading.classList.remove("highlight"), 2000);
-        });
-    });
-</script>
 <!-- news api script khatam -->
 
 
@@ -1945,6 +1870,7 @@
 <script src="assets/js/news.js"></script>
 
 </body>
+
 
 
 
