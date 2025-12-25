@@ -1,40 +1,34 @@
-// news.js
-
+// Replace YOUR_GNEWS_API_KEY with your real key
 const apiKey = "08f712ec6affe0f0323d4e7fda780aac";
+const categories = ["business", "entertainment", "sports", "technology", "general"];
 
-// API URLs for each category
-const apiUrls = {
-    business: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=business&apikey=${apiKey}`,
-    entertainment: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=entertainment&apikey=${apiKey}`,
-    sports: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=sports&apikey=${apiKey}`,
-    technology: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=technology&apikey=${apiKey}`,
-    world: `https://api.allorigins.win/raw?url=https://gnews.io/api/v4/top-headlines?country=pk&category=general&apikey=${apiKey}`
-};
+// Stable CORS proxy for GitHub Pages
+const proxy = "https://api.allorigins.win/raw?url=";
 
-// Function to fetch news
 async function fetchNews(category) {
+    const url = `https://gnews.io/api/v4/top-headlines?country=pk&category=${category}&apikey=${apiKey}`;
+
     try {
-        const response = await fetch(apiUrls[category]);
+        const response = await fetch(`${proxy}${encodeURIComponent(url)}`);
         const data = await response.json();
-        const newsContainer = document.getElementById(`${category}-news`);
-        newsContainer.innerHTML = '';
+        const container = document.getElementById(`${category}-news`);
+        container.innerHTML = "";
 
         data.articles.forEach(article => {
-            const newsItem = document.createElement('div');
-            newsItem.classList.add('news-item');
-            newsItem.innerHTML = `
+            const item = document.createElement("div");
+            item.classList.add("news-item");
+            item.innerHTML = `
                 <img src="${article.image || 'https://via.placeholder.com/150'}" alt="News Image">
                 <h3>${article.title}</h3>
                 <p>${article.description || 'No description available.'}</p>
                 <a href="${article.url}" target="_blank">Read More</a>
             `;
-            newsContainer.appendChild(newsItem);
+            container.appendChild(item);
         });
     } catch (error) {
         console.error(`Error fetching ${category} news:`, error);
+        document.getElementById(`${category}-news`).innerHTML = "<p>Unable to load news at the moment.</p>";
     }
 }
 
-// Fetch news for all categories
-['business', 'entertainment', 'sports', 'technology', 'world'].forEach(fetchNews);
-
+categories.forEach(fetchNews);
