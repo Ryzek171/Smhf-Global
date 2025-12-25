@@ -107,108 +107,7 @@
         }
     }
 
-    /* About Container - Enhanced Styling */
-    .main-container {
-        width: 85%;
-        margin: 60px auto;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95)) !important;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
-        animation: slideUpContent 1.5s ease-out;
-        backdrop-filter: blur(5px);
-    }
 
-    .about-title {
-        text-align: center;
-        font-size: 42px;
-        margin-bottom: 20px;
-        color: #009dff !important;
-        font-style: italic;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        animation: fadeInHeader 1.2s ease-in;
-    }
-
-    .animated-highlight {
-        font-size: 38px;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 40px;
-        background: linear-gradient(90deg, #000, #1d72ff, #000);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: gradientShift 8s ease infinite;
-    }
-
-    .about-text {
-        line-height: 1.9;
-        font-size: 20px;
-        margin-bottom: 30px;
-        text-align: justify;
-        font-style: italic;
-        color: #222 !important;
-        opacity: 0;
-        animation: fadeInText 1.5s ease forwards;
-        animation-delay: 0.5s;
-    }
-
-    .about-image {
-        width: 100%;
-        max-width: 800px;
-        height: auto;
-        display: block;
-        margin: 30px auto;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-        opacity: 0;
-        animation: fadeInImage 1.8s ease forwards;
-    }
-
-    .about-image:hover {
-        transform: scale(1.05);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
-    }
-
-    /* Animations */
-    @keyframes fadeInHeader {
-        0% { opacity: 0; transform: translateY(-40px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUpContent {
-        0% { opacity: 0; transform: translateY(60px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInImage {
-        0% { opacity: 0; transform: scale(0.9); }
-        100% { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes fadeInText {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 320px) {
-        .main-container { width: 95%; padding: 20px; }
-        .about-title { font-size: 32px; }
-        .animated-highlight { font-size: 28px; }
-        .about-text { font-size: 16px; }
-    }
-
-    @media (max-height: 481px) {
-        .main-container { margin: 20px auto; padding: 20px; }
-    }
 
     /* Chatbot Enhanced Styling */
     #chatContainer {
@@ -316,6 +215,112 @@
     .closeButton:hover {
         color: #ff0000;
     }
+    :root{
+  --navy:#0a192f;
+  --cyan:#00d2ff;
+  --blue:#0070f3;
+  --bg:#f4f7f9;
+  --dark:#1a202c;
+  --light:#718096;
+  --white:#fff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+
+
+/* reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s ease;
+}
+.reveal.active{
+  opacity:1;
+  transform:none;
+}
+
+
+
+
+/* header */
+.about-hero{
+  background:
+  linear-gradient(rgba(10,25,47,.75),rgba(10,25,47,.75)),
+  url("https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1600&auto=format&fit=crop");
+  background-size:cover;
+  background-position:center;
+  color:#fff;
+  text-align:center;
+  padding:120px 20px;
+}
+.about-hero h1{
+  font-size:3.4rem;
+}
+.about-hero p{
+  opacity:.8;
+  max-width:700px;
+  margin:15px auto 0;
+}
+
+/* layout */
+.section{
+  max-width:1200px;
+  margin:100px auto;
+  padding:0 20px;
+}
+
+.section-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:50px;
+  align-items:center;
+}
+
+.section img{
+  width:100%;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.section h2{
+  font-size:2.4rem;
+  color:var(--navy);
+  margin-bottom:20px;
+}
+
+.section p{
+  color:var(--light);
+  font-size:1.05rem;
+  margin-bottom:15px;
+}
+
+/* dark section */
+.dark{
+  background:var(--navy);
+  color:#fff;
+  padding:100px 20px;
+}
+.dark h2{color:var(--cyan);}
+.dark p{color:#cbd5e1;}
+
+/* stats */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px;
+  margin-top:40px;
+}
+.stat{
+  background:#112240;
+  padding:35px;
+  border-radius:16px;
+  text-align:center;
+}
+.stat h3{
+  color:var(--cyan);
+  font-size:2.2rem;
+}
 </style>
 
 <body class="bg-1">
@@ -405,40 +410,87 @@
     <!--================= Header Section End Here =================-->
 
     <!-- Main Container -->
-    <div class="main-container">
-        <h1 class="about-title">About Us</h1>
-        <p class="animated-highlight">Your Gateway to Reliable News and Insights.</p>
+  <header class="about-hero">
+  <div class="reveal">
+    <h1>About SMHF Global</h1>
+    <p>The intelligence backbone behind global infrastructure, signals, and future-ready journalism.</p>
+  </div>
+</header>
 
-        <div class="about-section">
-            <p class="about-text">
-                At SMHF Global, we are dedicated to delivering trustworthy and timely news to our readers across the
-                globe. Our mission is to inform, educate, and inspire, making sure every story resonates with you.
-                Whether it's breaking news, in-depth analysis, or expert opinions, we aim to keep you informed in a
-                fast-paced digital world. Our platform connects people to stories that matter, fostering a sense of
-                community and awareness.
-            </p>
-            <img src="assets/images/About us/global signal 3.png" alt="News Team" class="about-image">
-        </div>
-
-        <div class="about-section">
-            <p class="about-text">
-                Our dedicated team of professionals strives to bring unbiased and accurate news to the forefront. From
-                investigative journalism to expert analysis, SMHF Global is committed to maintaining the highest
-                standards of reporting.
-            </p>
-            <img src="assets/images/About us/perfection.png" alt="Global News" class="about-image">
-        </div>
-
-        <div class="about-section">
-            <p class="about-text">
-                At SMHF Global, our vision is to revolutionize the way news is delivered to audiences worldwide. We
-                ensure that our readers are empowered with the latest updates on politics, technology, business, and
-                entertainment. Our platform connects people to stories that matter, fostering a sense of community and
-                awareness.
-            </p>
-            <img src="assets/images/smhf dark logo.png" alt="Global News" class="about-image">
-        </div>
+<section class="section">
+  <div class="section-grid reveal">
+    <div>
+      <h2>Who We Are</h2>
+      <p>
+        SMHF Global is a next-generation news and intelligence network focused on infrastructure,
+        technology signals, global development, and strategic innovation.
+      </p>
+      <p>
+        We don’t just report events — we decode patterns, analyze global signals,
+        and deliver insight that shapes decision-making across governments, corporations,
+        and emerging markets.
+      </p>
     </div>
+    <img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?q=80&w=1200&auto=format&fit=crop">
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-grid reveal">
+    <img src="https://cdn.pixabay.com/photo/2016/03/26/13/09/newspaper-1283009_1280.jpg">
+    <div>
+      <h2>Global News & Signal Coverage</h2>
+      <p>
+        Our coverage spans smart cities, deep-foundation engineering, IoT infrastructure,
+        satellite networks, climate-neutral architecture, and global signal systems.
+      </p>
+      <p>
+        Every report is backed by verified data, expert validation, and on-ground intelligence.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="section reveal">
+    <h2>Our Signal Intelligence System</h2>
+    <p>
+      SMHF Global operates a proprietary signal intelligence framework that monitors
+      global infrastructure health, connectivity strength, and real-time system performance.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <h3>1,248+</h3>
+        <p>Active Global Projects</p>
+      </div>
+      <div class="stat">
+        <h3>99.9%</h3>
+        <p>Signal Reliability</p>
+      </div>
+      <div class="stat">
+        <h3>42</h3>
+        <p>Countries Covered</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-grid reveal">
+    <div>
+      <h2>Vision for the Future</h2>
+      <p>
+        Our mission is to become the world’s most trusted infrastructure and signal-based
+        news authority — bridging the gap between engineering, data, and global awareness.
+      </p>
+      <p>
+        SMHF Global stands where journalism meets intelligence.
+      </p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop">
+  </div>
+</section>
 
     <!--================= Footer Start Here =================-->
     <div class="footer1">
@@ -610,7 +662,17 @@
             });
         });
     </script>
+    <script>
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{
+  if(e.isIntersecting)e.target.classList.add("active");
+ });
+},{threshold:.15});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
 </body>
 
 </html>
+
 
