@@ -138,11 +138,18 @@ function mergeUnique(base, extra) {
   return merged;
 }
 
-/* ---------- ARTICLE HANDOFF (store + link to display.html) ---------- */
+/* ---------- ARTICLE HANDOFF (encode full article into the URL — no storage needed) ---------- */
 function storeAndLink(article) {
-  const id = 'art_' + btoa(unescape(encodeURIComponent(article.title))).slice(0, 24);
-  try { localStorage.setItem(id, JSON.stringify(article)); } catch (e) {}
-  return `display.html?id=${id}`;
+  const payload = JSON.stringify({
+    title: article.title,
+    description: article.description,
+    url: article.url,
+    image: article.image,
+    publishedAt: article.publishedAt,
+    source: article.source
+  });
+  const encoded = btoa(unescape(encodeURIComponent(payload)));
+  return `display.html?data=${encodeURIComponent(encoded)}`;
 }
 
 /* ---------- STATE + RENDER: GRID ---------- */
