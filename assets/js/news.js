@@ -1,9 +1,17 @@
 /* ==========================================================================
-   SMHF GLOBAL — NEWS ENGINE (GNews API — direct, no broken proxy)
+   SMHF GLOBAL — NEWS ENGINE (Google News RSS via rss2json — CORS-safe, no key needed)
    ========================================================================== */
 
-const GNEWS_API_KEY = 'a9e18cd629b77d7713e812b0e8a51dc4'; // <-- apni GNews.io key yahan daalein
-const GNEWS_BASE = 'https://gnews.io/api/v4';
+const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
+
+// Google News RSS feeds — Pakistan-region biased, per category
+const CATEGORY_FEEDS = {
+  general: 'https://news.google.com/rss?hl=en-PK&gl=PK&ceid=PK:en',
+  business: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-PK&gl=PK&ceid=PK:en',
+  technology: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-PK&gl=PK&ceid=PK:en',
+  sports: 'https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-PK&gl=PK&ceid=PK:en',
+  entertainment: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-PK&gl=PK&ceid=PK:en'
+};
 
 const state = {
   currentCategory: 'general',
@@ -26,26 +34,21 @@ window.loadNewsCategory = function (category) {
   state.loadedTitles.clear();
   state.page = 0;
   showSkeletons();
-  fetchTopHeadlines(category, true);
+  fetchCategoryFeed(category, true);
 };
 
-/* ---------- FETCH: TOP HEADLINES ---------- */
-async function fetchTopHeadlines(category, isFirstLoad = false) {
-  const url = `${GNEWS_BASE}/top-headlines?category=${category}&lang=en&country=pk&max=10&apikey=${GNEWS_API_KEY}`;
+/* ---------- FETCH: CATEGORY FEED (via rss2json, CORS-safe) ---------- */
+async function fetchCategoryFeed(category, isFirstLoad = false) {
+  const feedUrl = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}&count=20`;
 
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`GNews error: ${res.status}`);
+    if (!res.ok) throw new Error(`rss2json error: ${res.status}`);
     const data = await res.json();
+    if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
 
-    let articles = data.articles || [];
-
-    // Pakistan category feeds can be thin — top up with a broader world query
-    if (articles.length < 6) {
-      const extra = await fetchByQuery(categoryKeyword(category));
-      articles = mergeUnique(articles, extra);
-    }
-
+    const articles = (data.items || []).map(parseGoogleNewsItem);
     if (!articles.length) throw new Error('No articles returned');
 
     addArticles(articles, isFirstLoad);
@@ -61,18 +64,49 @@ async function fetchTopHeadlines(category, isFirstLoad = false) {
   }
 }
 
-/* ---------- FETCH: SEARCH (used for "Load More" + fallback) ---------- */
+/* ---------- FETCH: SEARCH (used for "Load More" + search box) ---------- */
 async function fetchByQuery(query) {
-  const url = `${GNEWS_BASE}/search?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${GNEWS_API_KEY}`;
+  const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}&count=15`;
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`GNews search error: ${res.status}`);
+    if (!res.ok) throw new Error(`rss2json search error: ${res.status}`);
     const data = await res.json();
-    return data.articles || [];
+    if (data.status !== 'ok') return [];
+    return (data.items || []).map(parseGoogleNewsItem);
   } catch (err) {
     console.error('News search failed:', err);
     return [];
   }
+}
+
+/* ---------- PARSE: Google News RSS item -> our article shape ---------- */
+function parseGoogleNewsItem(item) {
+  // Google News titles look like: "Headline text - Source Name"
+  let title = item.title || 'Untitled';
+  let sourceName = 'Google News';
+  const sepIndex = title.lastIndexOf(' - ');
+  if (sepIndex > -1) {
+    sourceName = title.slice(sepIndex + 3).trim();
+    title = title.slice(0, sepIndex).trim();
+  }
+
+  // Try to pull an image out of the description/content HTML, else placeholder
+  const html = item.description || item.content || '';
+  const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
+  const image = item.thumbnail || (imgMatch ? imgMatch[1] : '') || '';
+
+  // Strip HTML tags from description for clean text
+  const cleanDesc = html.replace(/<[^>]*>/g, '').trim();
+
+  return {
+    title,
+    description: cleanDesc || 'Tap to read the full story.',
+    url: item.link,
+    image,
+    publishedAt: item.pubDate,
+    source: { name: sourceName }
+  };
 }
 
 function categoryKeyword(category) {
@@ -84,15 +118,6 @@ function categoryKeyword(category) {
     entertainment: 'entertainment celebrity'
   };
   return map[category] || 'Pakistan';
-}
-
-function mergeUnique(base, extra) {
-  const seen = new Set(base.map(a => a.title));
-  const merged = [...base];
-  extra.forEach(a => {
-    if (!seen.has(a.title)) { merged.push(a); seen.add(a.title); }
-  });
-  return merged;
 }
 
 /* ---------- ARTICLE HANDOFF (store + link to display.html) ---------- */
@@ -149,7 +174,6 @@ function renderGrid(articles, replace) {
     `;
     grid.appendChild(card);
 
-    // Trigger reveal animation for newly injected cards
     requestAnimationFrame(() => {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -206,7 +230,7 @@ function renderTicker() {
   const track = document.getElementById('tickerTrack');
   if (!track || !state.articles.length) return;
   const headlines = state.articles.slice(0, 8).map(a => `<span>${escapeHTML(a.title)}</span>`).join('');
-  track.innerHTML = headlines + headlines; // duplicate for seamless loop
+  track.innerHTML = headlines + headlines;
 }
 
 /* ---------- LIVE COUNTER ---------- */
@@ -228,7 +252,6 @@ document.getElementById('loadMoreBtn')?.addEventListener('click', async function
   this.querySelector('.btn-text').textContent = 'Loading...';
 
   state.page++;
-  const query = `${categoryKeyword(state.currentCategory)} ${state.page}`;
   const extra = await fetchByQuery(categoryKeyword(state.currentCategory));
   const fresh = extra.filter(a => !state.loadedTitles.has(a.title));
 
