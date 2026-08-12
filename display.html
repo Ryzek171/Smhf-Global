@@ -183,28 +183,40 @@ if (!raw) {
 }
 
 async function loadRelated(title) {
-  const keyword = title.split(' ').slice(0, 3).join(' ');
-  const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(keyword)}&lang=en&max=4&apikey=${GNEWS_API_KEY}`;
+  const keyword = title.split(' ').slice(0, 4).join(' ');
+  const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(keyword)}&hl=en-PK&gl=PK&ceid=PK:en`;
+  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=4`;
   const grid = document.getElementById('relatedGrid');
   if (!grid) return;
 
   try {
     const res = await fetch(url);
     const data = await res.json();
-    const articles = (data.articles || []).slice(0, 4);
-    if (!articles.length) { grid.innerHTML = '<p style="color:var(--text-dim);">No related stories found.</p>'; return; }
+    if (data.status !== 'ok' || !data.items?.length) {
+      grid.innerHTML = '<p style="color:var(--text-dim);">No related stories found.</p>';
+      return;
+    }
 
-    grid.innerHTML = articles.map(a => `
-      <a href="${a.url}" target="_blank" rel="noopener" class="news-card">
-        <div class="news-card-img">
-          <img src="${a.image || PLACEHOLDER_IMG}" alt="" onerror="this.src='${PLACEHOLDER_IMG}'">
-        </div>
-        <div class="news-card-body">
-          <div class="news-card-meta"><span>${a.source?.name || 'SMHF'}</span></div>
-          <h3 style="font-size:15px;">${escapeHTML(a.title)}</h3>
-        </div>
-      </a>
-    `).join('');
+    grid.innerHTML = data.items.slice(0, 4).map(item => {
+      let t = item.title || '';
+      let src = 'Google News';
+      const sep = t.lastIndexOf(' - ');
+      if (sep > -1) { src = t.slice(sep + 3).trim(); t = t.slice(0, sep).trim(); }
+      const html = item.description || '';
+      const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
+      const img = item.thumbnail || (imgMatch ? imgMatch[1] : '') || PLACEHOLDER_IMG;
+
+      return `
+        <a href="${item.link}" target="_blank" rel="noopener" class="news-card">
+          <div class="news-card-img">
+            <img src="${img}" alt="" onerror="this.src='${PLACEHOLDER_IMG}'">
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-meta"><span>${src}</span></div>
+            <h3 style="font-size:15px;">${escapeHTML(t)}</h3>
+          </div>
+        </a>`;
+    }).join('');
   } catch (err) {
     grid.innerHTML = '<p style="color:var(--text-dim);">Unable to load related stories.</p>';
     console.error(err);
