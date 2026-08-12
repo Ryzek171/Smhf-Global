@@ -184,7 +184,7 @@ function renderGrid(articles, replace) {
           <span>${readingTime(a.description)}</span>
         </div>
         <h3>${escapeHTML(a.title)}</h3>
-        <p>${escapeHTML(a.description || 'No description available.')}</p>
+        <p>${escapeHTML(truncateText(a.description, 110) || 'No description available.')}</p>
         <a href="${storeAndLink(a)}" target="_blank" rel="noopener" class="news-card-link">
           Read Story <i class="fa-solid fa-arrow-right"></i>
         </a>
@@ -218,7 +218,7 @@ function renderSpotlight() {
     <div class="spotlight-content">
       <span class="news-card-cat">${state.currentCategory}</span>
       <h2>${escapeHTML(top.title)}</h2>
-      <p>${escapeHTML(top.description || '')}</p>
+      <p>${escapeHTML(truncateText(top.description, 180))}</p>
       <a href="${storeAndLink(top)}" target="_blank" rel="noopener" class="btn btn-primary">
         Read Full Story <i class="fa-solid fa-arrow-right"></i>
       </a>
@@ -348,4 +348,10 @@ function timeAgo(dateStr) {
 function readingTime(text = '') {
   const words = text.split(' ').length;
   return `${Math.max(1, Math.ceil(words / 200))} min read`;
+}
+function truncateText(text, maxLen) {
+  if (!text) return '';
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  return clean.slice(0, maxLen).replace(/\s+\S*$/, '') + '…';
 }
