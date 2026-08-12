@@ -40,7 +40,7 @@ window.loadNewsCategory = function (category) {
 /* ---------- FETCH: CATEGORY FEED (via rss2json, CORS-safe) ---------- */
 async function fetchCategoryFeed(category, isFirstLoad = false) {
   const feedUrl = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
-  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}&count=20`;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
 
   try {
     const res = await fetch(url);
@@ -67,7 +67,7 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
 /* ---------- FETCH: SEARCH (used for "Load More" + search box) ---------- */
 async function fetchByQuery(query) {
   const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
-  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}&count=15`;
+const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`rss2json search error: ${res.status}`);
