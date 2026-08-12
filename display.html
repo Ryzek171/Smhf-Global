@@ -132,8 +132,15 @@ function readingTime(text = '') {
 }
 
 const params = new URLSearchParams(window.location.search);
-const id = params.get('id');
-const raw = id ? localStorage.getItem(id) : null;
+const dataParam = params.get('data');
+let raw = null;
+if (dataParam) {
+  try {
+    raw = decodeURIComponent(escape(atob(dataParam)));
+  } catch (e) {
+    raw = null;
+  }
+}
 const container = document.getElementById('articleContainer');
 const PLACEHOLDER_IMG = 'assets/images/latest/image1.png';
 
