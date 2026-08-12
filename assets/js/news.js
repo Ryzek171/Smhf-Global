@@ -4,8 +4,6 @@
 
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
 
-// Dawn.com feeds have real images (native publisher feed).
-// Google News is used where Dawn doesn't have a solid dedicated feed.
 const CATEGORY_FEEDS = {
   general:       { url: 'https://www.dawn.com/feeds/home',     source: 'Dawn.com',    google: false },
   business:      { url: 'https://www.dawn.com/feeds/business', source: 'Dawn.com',    google: false },
@@ -23,12 +21,10 @@ const state = {
 
 const PLACEHOLDER_IMG = 'assets/images/latest/image1.png';
 
-/* ---------- INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   loadNewsCategory('general');
 });
 
-/* Exposed globally so script.js category tabs can call it */
 window.loadNewsCategory = function (category) {
   state.currentCategory = category;
   state.articles = [];
@@ -38,7 +34,6 @@ window.loadNewsCategory = function (category) {
   fetchCategoryFeed(category, true);
 };
 
-/* ---------- FETCH: CATEGORY FEED (via rss2json, CORS-safe) ---------- */
 async function fetchCategoryFeed(category, isFirstLoad = false) {
   const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
   const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
@@ -51,7 +46,6 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
 
     let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
 
-    // If a dedicated feed comes back thin, top up with a Google News search
     if (articles.length < 6) {
       const extra = await fetchByQuery(categoryKeyword(category));
       articles = mergeUnique(articles, extra);
@@ -72,7 +66,6 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
   }
 }
 
-/* ---------- FETCH: SEARCH (used for "Load More" + search box + fallback) ---------- */
 async function fetchByQuery(query) {
   const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
   const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
@@ -88,12 +81,10 @@ async function fetchByQuery(query) {
   }
 }
 
-/* ---------- PARSE: RSS item -> our article shape ---------- */
 function parseNewsItem(item, feedMeta) {
   let title = item.title || 'Untitled';
   let sourceName = feedMeta.source;
 
-  // Google News titles look like: "Headline text - Source Name"
   if (feedMeta.google) {
     const sepIndex = title.lastIndexOf(' - ');
     if (sepIndex > -1) {
@@ -138,7 +129,7 @@ function mergeUnique(base, extra) {
   return merged;
 }
 
-/* ---------- ARTICLE HANDOFF (encode full article into the URL — no storage needed) ---------- */
+/* ---------- ARTICLE HANDOFF (encode full article + category into the URL) ---------- */
 function storeAndLink(article) {
   const payload = JSON.stringify({
     title: article.title,
@@ -146,13 +137,13 @@ function storeAndLink(article) {
     url: article.url,
     image: article.image,
     publishedAt: article.publishedAt,
-    source: article.source
+    source: article.source,
+    category: state.currentCategory
   });
   const encoded = btoa(unescape(encodeURIComponent(payload)));
   return `display.html?data=${encodeURIComponent(encoded)}`;
 }
 
-/* ---------- STATE + RENDER: GRID ---------- */
 function addArticles(articles, replace) {
   const fresh = articles.filter(a => !state.loadedTitles.has(a.title));
   fresh.forEach(a => state.loadedTitles.add(a.title));
@@ -213,7 +204,6 @@ function renderGrid(articles, replace) {
   });
 }
 
-/* ---------- RENDER: SPOTLIGHT (featured + most read) ---------- */
 function renderSpotlight() {
   const main = document.getElementById('spotlightMain');
   if (!main || !state.articles.length) return;
@@ -250,7 +240,6 @@ function renderMostRead() {
   `).join('');
 }
 
-/* ---------- RENDER: TICKER ---------- */
 function renderTicker() {
   const track = document.getElementById('tickerTrack');
   if (!track || !state.articles.length) return;
@@ -258,7 +247,6 @@ function renderTicker() {
   track.innerHTML = headlines + headlines;
 }
 
-/* ---------- LIVE COUNTER ---------- */
 function animateCounter(target) {
   const el = document.getElementById('liveCounter');
   if (!el) return;
@@ -271,7 +259,6 @@ function animateCounter(target) {
   }, 30);
 }
 
-/* ---------- LOAD MORE ---------- */
 document.getElementById('loadMoreBtn')?.addEventListener('click', async function () {
   this.classList.add('loading');
   this.querySelector('.btn-text').textContent = 'Loading...';
@@ -293,7 +280,6 @@ document.getElementById('loadMoreBtn')?.addEventListener('click', async function
   if (!this.disabled) this.querySelector('.btn-text').textContent = 'Load More';
 });
 
-/* ---------- SEARCH ---------- */
 const searchInputEl = document.getElementById('searchInput');
 let searchTimeout;
 searchInputEl?.addEventListener('input', (e) => {
@@ -321,7 +307,6 @@ searchInputEl?.addEventListener('input', (e) => {
   }, 450);
 });
 
-/* ---------- ERROR STATE ---------- */
 function renderErrorState() {
   const grid = document.getElementById('newsGrid');
   if (grid) {
@@ -335,7 +320,6 @@ function renderErrorState() {
   if (ticker) ticker.innerHTML = '<span>Unable to load latest headlines — please refresh.</span>';
 }
 
-/* ---------- UTILITIES ---------- */
 function escapeHTML(str = '') {
   const div = document.createElement('div');
   div.textContent = str;
