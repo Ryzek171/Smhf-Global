@@ -185,7 +185,7 @@ if (!raw) {
 async function loadRelated(title) {
   const keyword = title.split(' ').slice(0, 4).join(' ');
   const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(keyword)}&hl=en-PK&gl=PK&ceid=PK:en`;
-  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=4`;
+const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
   const grid = document.getElementById('relatedGrid');
   if (!grid) return;
 
