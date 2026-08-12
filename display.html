@@ -133,7 +133,7 @@ function readingTime(text = '') {
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
-const raw = id ? sessionStorage.getItem(id) : null;
+const raw = id ? localStorage.getItem(id) : null;
 const container = document.getElementById('articleContainer');
 const PLACEHOLDER_IMG = 'assets/images/latest/image1.png';
 
