@@ -1,16 +1,17 @@
 /* ==========================================================================
-   SMHF GLOBAL — NEWS ENGINE (Google News RSS via rss2json — CORS-safe, no key needed)
+   SMHF GLOBAL — NEWS ENGINE (Dawn.com + Google News via rss2json — CORS-safe)
    ========================================================================== */
 
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
 
-// Google News RSS feeds — Pakistan-region biased, per category
+// Dawn.com feeds have real images (native publisher feed).
+// Google News is used where Dawn doesn't have a solid dedicated feed.
 const CATEGORY_FEEDS = {
-  general: 'https://news.google.com/rss?hl=en-PK&gl=PK&ceid=PK:en',
-  business: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-PK&gl=PK&ceid=PK:en',
-  technology: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-PK&gl=PK&ceid=PK:en',
-  sports: 'https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-PK&gl=PK&ceid=PK:en',
-  entertainment: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-PK&gl=PK&ceid=PK:en'
+  general:       { url: 'https://www.dawn.com/feeds/home',     source: 'Dawn.com',    google: false },
+  business:      { url: 'https://www.dawn.com/feeds/business', source: 'Dawn.com',    google: false },
+  technology:    { url: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true },
+  sports:        { url: 'https://www.dawn.com/feeds/sport',    source: 'Dawn.com',    google: false },
+  entertainment: { url: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true }
 };
 
 const state = {
@@ -39,8 +40,8 @@ window.loadNewsCategory = function (category) {
 
 /* ---------- FETCH: CATEGORY FEED (via rss2json, CORS-safe) ---------- */
 async function fetchCategoryFeed(category, isFirstLoad = false) {
-  const feedUrl = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
-  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
+  const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
 
   try {
     const res = await fetch(url);
@@ -48,7 +49,14 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
     const data = await res.json();
     if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
 
-    const articles = (data.items || []).map(parseGoogleNewsItem);
+    let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
+
+    // If a dedicated feed comes back thin, top up with a Google News search
+    if (articles.length < 6) {
+      const extra = await fetchByQuery(categoryKeyword(category));
+      articles = mergeUnique(articles, extra);
+    }
+
     if (!articles.length) throw new Error('No articles returned');
 
     addArticles(articles, isFirstLoad);
@@ -64,39 +72,40 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
   }
 }
 
-/* ---------- FETCH: SEARCH (used for "Load More" + search box) ---------- */
+/* ---------- FETCH: SEARCH (used for "Load More" + search box + fallback) ---------- */
 async function fetchByQuery(query) {
   const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
-const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`rss2json search error: ${res.status}`);
     const data = await res.json();
     if (data.status !== 'ok') return [];
-    return (data.items || []).map(parseGoogleNewsItem);
+    return (data.items || []).map(item => parseNewsItem(item, { source: 'Google News', google: true }));
   } catch (err) {
     console.error('News search failed:', err);
     return [];
   }
 }
 
-/* ---------- PARSE: Google News RSS item -> our article shape ---------- */
-function parseGoogleNewsItem(item) {
-  // Google News titles look like: "Headline text - Source Name"
+/* ---------- PARSE: RSS item -> our article shape ---------- */
+function parseNewsItem(item, feedMeta) {
   let title = item.title || 'Untitled';
-  let sourceName = 'Google News';
-  const sepIndex = title.lastIndexOf(' - ');
-  if (sepIndex > -1) {
-    sourceName = title.slice(sepIndex + 3).trim();
-    title = title.slice(0, sepIndex).trim();
+  let sourceName = feedMeta.source;
+
+  // Google News titles look like: "Headline text - Source Name"
+  if (feedMeta.google) {
+    const sepIndex = title.lastIndexOf(' - ');
+    if (sepIndex > -1) {
+      sourceName = title.slice(sepIndex + 3).trim();
+      title = title.slice(0, sepIndex).trim();
+    }
   }
 
-  // Try to pull an image out of the description/content HTML, else placeholder
   const html = item.description || item.content || '';
   const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
   const image = item.thumbnail || (imgMatch ? imgMatch[1] : '') || '';
 
-  // Strip HTML tags from description for clean text
   const cleanDesc = html.replace(/<[^>]*>/g, '').trim();
 
   return {
@@ -118,6 +127,15 @@ function categoryKeyword(category) {
     entertainment: 'entertainment celebrity'
   };
   return map[category] || 'Pakistan';
+}
+
+function mergeUnique(base, extra) {
+  const seen = new Set(base.map(a => a.title));
+  const merged = [...base];
+  extra.forEach(a => {
+    if (!seen.has(a.title)) { merged.push(a); seen.add(a.title); }
+  });
+  return merged;
 }
 
 /* ---------- ARTICLE HANDOFF (store + link to display.html) ---------- */
