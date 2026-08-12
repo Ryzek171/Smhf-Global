@@ -141,7 +141,7 @@ function mergeUnique(base, extra) {
 /* ---------- ARTICLE HANDOFF (store + link to display.html) ---------- */
 function storeAndLink(article) {
   const id = 'art_' + btoa(unescape(encodeURIComponent(article.title))).slice(0, 24);
-  try { sessionStorage.setItem(id, JSON.stringify(article)); } catch (e) {}
+  try { localStorage.setItem(id, JSON.stringify(article)); } catch (e) {}
   return `display.html?id=${id}`;
 }
 
