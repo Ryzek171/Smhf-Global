@@ -1,636 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMHF GLOBAL About</title>
-    <!--================= Favicon =================-->
-    <link rel="apple-touch-icon" href="assets/images/smhf dark logo.png">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/smhf dark logo.png">
-    <!--================= Bootstrap V5 css =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <!--================= Font Awesome 5 css =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/all.min.css">
-    <!--================= Animate css =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
-    <!--================= Animate css =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/magnific-popup.css">
-    <!--================= Main Stylesheet =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/metisMenu.css">
-    <!--================= Main Stylesheet =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/rtsmenu.css">
-    <!--================= Animate css =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/swiper.min.css">
-    <!--================= Main Stylesheet =================-->
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — SMHF Global</title>
+<meta name="description" content="SMHF Global is a next-generation news and intelligence network focused on infrastructure, technology signals, and global development.">
+<link rel="apple-touch-icon" href="assets/images/smhf dark logo.png">
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/smhf dark logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="assets/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<style>
-    /* logo ki styling */
-    .logo1 {
-        width: 200px;
-        margin-right: auto;
-    }
-    /* logo styling khatam */
-   
-    /* Chatbot Enhanced Styling */
-    #chatContainer {
-        background: linear-gradient(145deg, #ffffff, #f0f8ff);
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        width: 90%;
-        max-width: 380px;
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        z-index: 9999;
-        display: none;
-        animation: fadeIn 0.4s ease;
-        border: 1px solid #e0e0e0;
-    }
-    #chatbox {
-        padding: 15px;
-        height: 350px;
-        overflow-y: auto;
-        background: #f9f9f9;
-        border-radius: 10px 10px 0 0;
-    }
-    #chatbox .user-message {
-        text-align: right;
-        margin: 10px 0;
-        padding: 10px 15px;
-        background: #1d72ff;
-        color: white;
-        border-radius: 15px 15px 5px 15px;
-        max-width: 80%;
-        margin-left: auto;
-    }
-    #chatbox .bot-message {
-        text-align: left;
-        margin: 10px 0;
-        padding: 10px 15px;
-        background: #e9ecef;
-        color: #333;
-        border-radius: 15px 15px 15px 5px;
-        max-width: 80%;
-    }
-    #userInput {
-        width: calc(100% - 100px);
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 15px;
-    }
-    button01 {
-        padding: 12px 20px;
-        border: none;
-        border-radius: 8px;
-        background-color: #1d72ff;
-        color: white;
-        cursor: pointer;
-        font-size: 15px;
-        transition: all 0.3s ease;
-    }
-    button01:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
-    #helpButton {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        background: linear-gradient(45deg, #1d72ff, #009dff);
-        color: white;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        font-size: 15px;
-        font-style: italic;
-        transition: all 0.3s ease;
-        z-index: 9998;
-    }
-    #helpButton:hover {
-        background: linear-gradient(45deg, #000, #1d72ff);
-        transform: translateY(-5px) scale(1.1);
-    }
-    .closeButton {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: #666;
-        transition: color 0.3s;
-    }
-    .closeButton:hover {
-        color: #ff0000;
-    }
-    :root{
-  --navy:#0a192f;
-  --cyan:#00d2ff;
-  --blue:#0070f3;
-  --bg:#f4f7f9;
-  --dark:#1a202c;
-  --light:#718096;
-  --white:#fff;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-/* reveal animation */
-.reveal{
-  opacity:0;
-  transform:translateY(60px);
-  transition:1s ease;
-}
-.reveal.active{
-  opacity:1;
-  transform:none;
-}
-/* header */
-.about-hero {
-  background:
-    linear-gradient(rgba(10,25,47,.75), rgba(10,25,47,.75)),
-    url('assets/images/about-us/banner.avif');
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  text-align: center;
+<body>
 
-  /* size adjusted */
-  padding: 90px 30px;     /* height thodi zyada */
-  max-width: 1200px;      /* width thodi badi */
-  margin: 70px auto;     /* balanced gaps */
-  border-radius: 18px;
-}
-.about-hero h1{
-  font-size:3.4rem;
-    color: #14d7d7;
-}
-.about-hero p{
-  opacity:.8;
-  max-width:700px;
-  margin:15px auto 0;
-     color: #14d7d7;
-}
-/* layout */
-.section{
-  max-width:1200px;
-  margin:100px auto;
-  padding:0 20px;
-}
-.section-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px;
-  align-items:center;
-}
-.section img{
-  width:100%;
-  border-radius:18px;
-  box-shadow:0 15px 40px rgba(0,0,0,.08);
-}
-.section h2{
-  font-size:2.4rem;
-  color:var(--navy);
-  margin-bottom:20px;
-}
-.section p{
-  color:var(--light);
-  font-size:1.05rem;
-  margin-bottom:15px;
-}
-/* dark section */
-.dark{
-  background:var(--navy);
-  color:#fff;
-  padding:100px 20px;
-}
-.dark h2{color:var(--cyan);}
-.dark p{color:#cbd5e1;}
-/* stats */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:30px;
-  margin-top:40px;
-}
-.stat{
-  background:#112240;
-  padding:35px;
-  border-radius:16px;
-  text-align:center;
-}
-.stat h3{
-  color:var(--cyan);
-  font-size:2.2rem;
-}
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="preloader" id="preloader"><div class="preloader-logo">SMHF<span>.</span></div></div>
 
-/* Added Responsive Improvements */
-@media (max-width: 992px) {
-    .about-hero {
-        padding: 80px 20px;
-    }
-    .about-hero h1 {
-        font-size: 2.8rem;
-    }
-    .about-hero p {
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .section-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-    }
-    .section-grid > div {
-        order: 1;
-    }
-    .section-grid img {
-        order: 2;
-        max-width: 90%;
-        margin: 0 auto;
-    }
-    .section h2 {
-        font-size: 2rem;
-    }
-    .stats {
-        grid-template-columns: 1fr;
-    }
-    .stat {
-        padding: 25px;
-    }
-    .logo1 img {
-        height: 80px !important;
-    }
-    #chatContainer {
-        width: 95%;
-        max-width: none;
-        left: 2.5%;
-        right: 2.5%;
-        bottom: 80px;
-    }
-    #helpButton {
-        padding: 12px 16px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .about-hero {
-        padding: 60px 15px;
-    }
-    .about-hero h1 {
-        font-size: 2.2rem;
-    }
-    .about-hero p {
-        font-size: 1rem;
-    }
-    .section {
-        margin: 60px auto;
-    }
-    .dark {
-        padding: 60px 15px;
-    }
-}
-</style>
-<body class="bg-1">
-    <!-- chatbot start -->
-    <div id="chatContainer">
-        <button class="closeButton" onclick="closeChat()">×</button>
-        <div id="chatbox"></div>
-        <div style="display: flex; padding: 15px;">
-            <input type="text" id="userInput" placeholder="Write your question...">
-            <button01 onclick="sendMessage()">Send</button01>
-        </div>
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/images/smhf logo.png" alt="SMHF Global" class="brand-logo">
+      <span class="brand-text">SMHF <em>Global</em></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="index.html#trending" class="nav-link">Trending</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-sun sun-icon"></i>
+        <i class="fa-solid fa-moon moon-icon"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button id="helpButton" style="font-style: italic;">Need Help</button>
-    <!-- chat bot khatam -->
-    <!--================= Preloader Section Start Here =================-->
-    <div id="rts__preloader">
-        <div class="loader">SMHF <span>GLOBAL</span></div>
-    </div>
-    <!--================= Preloader End Here =================-->
-    <!--================= Header Section Start Here =================-->
-    <div class="anywere"></div>
-    <header id="rtsHeader">
-        <div class="navbar-sticky-mobile">
-            <div class="navbar-part navbar-part-1 navbar-part-4">
-                <div class="container">
-                    <div class="navbar-inner navbar-inner-4">
-                        <div class="header-left"></div>
-                        <a href="index.html" class="logo1">
-                            <img class="logo-default" style="height: 100px;" src="assets/images/smhf dark logo.png" alt=" SMHF GLOBAL">
-                            <img class="logo-dark" style="height: 100px;" src="assets/images/smhf logo.png" alt="SMHF GLOBAL">
-                        </a>
-                        <div class="header-right">
-                            <!-- karachi api Start -->
-                            <a href="">Karachi</a>
-                            <div>
-                                <p id="temp"></p>
-                                <p id="time"></p>
-                            </div>
-                            <!-- karachi api khatam -->
-                            <div class="hamburger"><span></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar-sticky">
-                <div class="navbar-part navbar-part1 sticked-navbar">
-                    <div class="container">
-                        <div class="navbar-inner navbar-inner-2">
-                            <a href="index.html" class="logo"><img class="logo-default" height="150px" src="assets/images/smhf dark logo.png" alt="SMHF GLOBAL">
-                                <img class="logo-dark" height="150px" src="assets/images/smhf logo.png" alt="SMHF GLOBAL"></a>
-                            <div class="rts-menu rts-menu1 m-0">
-                                <nav class="menus menu-toggle">
-                                    <ul class="nav__menu">
-                            <li class="dropdown"><a class="menu-item item-1" href="index.html">Home</a></li>
-                                        <li><a class="menu-item active" href="contact.html">Contact</a></li>
-                                        <li><a class="menu-item active" href="about.html">About</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <aside class="slide-bar">
-                <div class="offset-sidebar">
-                    <a class="hamburger mobile-hamburger ml--30" href="#"><span></span></a>
-                    <div class="offset-widget offset-logo mb-30">
-                        <a href="index.html">
-                            <img src="assets/images/smhf logo.png" alt="SMHF GLOBAL">
-                        </a>
-                    </div>
-                </div>
-                <nav class="side-mobile-menu">
-                    <ul id="mobile-menu-active">
-                        <li><a class="mm-link" href="index.html">Home</a></li>
-                        <li><a class="mm-link" href="contact.html">Contact</a></li>
-                        <li><a class="mm-link" href="about.html">About</a></li>
-                    </ul>
-                </nav>
-            </aside>
-            <div class="body-overlay"></div>
-    </header>
-    <!--================= Header Section End Here =================-->
-    <!-- Main Container -->
-  <header class="about-hero">
-  <div class="reveal">
-    <h1>About SMHF Global</h1>
-    <p>The intelligence backbone behind global infrastructure, signals, and future-ready journalism.</p>
   </div>
 </header>
-<section class="section">
-  <div class="section-grid reveal">
-    <div>
+
+<div class="mobile-drawer" id="mobileDrawer">
+  <a href="index.html">Home</a>
+  <a href="index.html#trending">Trending</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- ============ PAGE HERO ============ -->
+<section class="page-hero">
+  <div class="hero-bg"><div class="hero-glow glow-1"></div><div class="hero-glow glow-2"></div></div>
+  <div class="container" data-animate="fade-up" style="position:relative;z-index:2;">
+    <span class="badge-live" style="justify-content:center;"><span class="dot"></span> Est. for a smarter newsroom</span>
+    <h1>About <span class="gradient-text">SMHF Global</span></h1>
+    <p>The intelligence backbone behind global infrastructure, signals, and future-ready journalism.</p>
+  </div>
+</section>
+
+<!-- ============ WHO WE ARE ============ -->
+<section class="split-section">
+  <div class="container split-grid" data-animate="fade-up">
+    <div class="split-text">
       <h2>Who We Are</h2>
-      <p>
-        SMHF Global is a next-generation news and intelligence network focused on infrastructure,
-        technology signals, global development, and strategic innovation.
-      </p>
-      <p>
-        We don’t just report events — we decode patterns, analyze global signals,
-        and deliver insight that shapes decision-making across governments, corporations,
-        and emerging markets.
-      </p>
+      <p>SMHF Global is a next-generation news and intelligence network focused on infrastructure, technology signals, global development, and strategic innovation.</p>
+      <p>We don't just report events — we decode patterns, analyze global signals, and deliver insight that shapes decision-making across governments, corporations, and emerging markets.</p>
     </div>
-    <img src="assets/images/about-us/first.avif">
+    <div class="split-img"><img src="assets/images/about-us/first.avif" alt="Who we are"></div>
   </div>
 </section>
-<section class="section">
-  <div class="section-grid reveal">
-    <div>
-      <h2>Global News & Signal Coverage</h2>
-      <p>
-        Our coverage spans smart cities, deep-foundation engineering, IoT infrastructure,
-        satellite networks, climate-neutral architecture, and global signal systems.
-      </p>
-      <p>
-        Every report is backed by verified data, expert validation, and on-ground intelligence.
-      </p>
+
+<!-- ============ COVERAGE ============ -->
+<section class="split-section">
+  <div class="container split-grid reverse" data-animate="fade-up">
+    <div class="split-text">
+      <h2>Global News &amp; Signal Coverage</h2>
+      <p>Our coverage spans smart cities, deep-foundation engineering, IoT infrastructure, satellite networks, climate-neutral architecture, and global signal systems.</p>
+      <p>Every report is backed by verified data, expert validation, and on-ground intelligence.</p>
     </div>
-          <img src="assets/images/about-us/second.png">
+    <div class="split-img"><img src="assets/images/about-us/second.png" alt="Global coverage"></div>
   </div>
 </section>
-<section class="dark">
-  <div class="section reveal">
+
+<!-- ============ STATS ============ -->
+<section class="dark-band">
+  <div class="container" data-animate="fade-up">
     <h2>Our Signal Intelligence System</h2>
-    <p>
-      SMHF Global operates a proprietary signal intelligence framework that monitors
-      global infrastructure health, connectivity strength, and real-time system performance.
-    </p>
-    <div class="stats">
-      <div class="stat">
-        <h3>1,248+</h3>
-        <p>Active Global Projects</p>
-      </div>
-      <div class="stat">
-        <h3>99.9%</h3>
-        <p>Signal Reliability</p>
-      </div>
-      <div class="stat">
-        <h3>42</h3>
-        <p>Countries Covered</p>
-      </div>
+    <p>SMHF Global operates a proprietary signal intelligence framework that monitors global infrastructure health, connectivity strength, and real-time system performance.</p>
+    <div class="stats-row">
+      <div class="stat-block"><h3>1,248+</h3><p>Active Global Projects</p></div>
+      <div class="stat-block"><h3>99.9%</h3><p>Signal Reliability</p></div>
+      <div class="stat-block"><h3>42</h3><p>Countries Covered</p></div>
     </div>
   </div>
 </section>
-<section class="section">
-  <div class="section-grid reveal">
-    <div>
+
+<!-- ============ VISION ============ -->
+<section class="split-section">
+  <div class="container split-grid" data-animate="fade-up">
+    <div class="split-text">
       <h2>Vision for the Future</h2>
-      <p>
-        Our mission is to become the world’s most trusted infrastructure and signal-based
-        news authority — bridging the gap between engineering, data, and global awareness.
-      </p>
-      <p>
-        SMHF Global stands where journalism meets intelligence.
-      </p>
+      <p>Our mission is to become the world's most trusted infrastructure and signal-based news authority — bridging the gap between engineering, data, and global awareness.</p>
+      <p>SMHF Global stands where journalism meets intelligence.</p>
     </div>
-    <img src="assets/images/about-us/third.avif">
+    <div class="split-img"><img src="assets/images/about-us/third.avif" alt="Vision"></div>
   </div>
 </section>
-    <!--================= Footer Start Here =================-->
-    <div class="footer1">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="row">
-                    <div class="col-xl-3 col-md-6 col-sm-6">
-                        <div class="footer-widget">
-                            <div class="footer-logo"><img class="logo-default" src="assets/images/smhf dark logo.png" alt="smhf">
-                                <img class="logo-dark" src="assets/images/smhf logo.png" alt="smhf">
-                            </div>
-                            <p class="text">When an unknown printer took scrambled it to make specimen book not only five.</p>
-                            <a href="sign-up.html" class="find-us">Find us here <i class="far fa-long-arrow-right"></i></a>
-                            <ul class="social-links">
-                                <li> <a href="#" class="platform"><i class="fab fa-facebook-f"></i></a></li>
-                                <li> <a href="#" class="platform"><i class="fab fa-pinterest-p"></i></a></li>
-                                <li><a href="#" class="platform"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li> <a href="#" class="platform"><i class="fab fa-vimeo-v"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-sm-6">
-                        <div class="footer-widget">
-                            <h3 class="footer-widget-title">Categories</h3>
-                            <ul class="widget-items cata-widget">
-                                <li class="widget-list-item"><a href="#technology">Technology</a></li>
-                                <li class="widget-list-item"><a href="#business">Business</a></li>
-                                <li class="widget-list-item"><a href="#world">World</a></li>
-                                <li class="widget-list-item"><a href="#sports">Sports</a></li>
-                                <li class="widget-list-item"><a href="#entertainment">Entertainment</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-sm-6">
-                        <div class="footer-widget">
-                            <h3 class="footer-widget-title">Recent Posts</h3>
-                            <div class="recent-post">
-                                <div class="picture"><a href=""><img height="92px" src="assets/images/footer/1.jpeg" alt="side-post-image"></a></div>
-                                <div class="content">
-                                    <div class="recent-post-title"><a href="#0">Asia Cup cricket tournament it is scheduled in October 2025. </a></div>
-                                    <a href="#" class="post-author item"><img class="span-icon" src="assets/images/user.svg" alt="user-icon">Maryam</a>
-                                </div>
-                            </div>
-                            <div class="recent-post">
-                                <div class="picture"><a href=""><img width="72px" height="90px" src="assets/images/footer/2.jpeg" alt="side-post-image"></a></div>
-                                <div class="content">
-                                    <div class="recent-post-title"><a href="#0">A judge followed the prosecutors is not jail time etc to Donald Trump</a></div>
-                                    <a href="" class="post-author item"><img class="span-icon" src="assets/images/user.svg" alt="user-icon">Maryam</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom-area">
-                <span class="copyright">© 2025 All rights reserved <span class="separator">|</span> SMHF GLOBAL</span>
-            </div>
-        </div>
+
+<!-- ============ CTA ============ -->
+<section class="newsletter">
+  <div class="container newsletter-inner" data-animate="fade-up">
+    <div>
+      <h2>Want the full picture, daily?</h2>
+      <p>Join thousands who trust SMHF Global for signal-grade news.</p>
     </div>
-    <!--================= Footer End Here =================-->
-    <!-- Color switcher -->
-    <div class="modal-sidebar-scroll rts-dark-light">
-        <ul>
-            <li><span>Dark</span><i class="rts-go-dark fal fa-moon"></i></li>
-            <li><span>Light</span><i class="rts-go-light far fa-sun"></i></li>
-        </ul>
+    <a href="index.html#trending" class="btn btn-primary">Read Latest Stories <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="assets/images/smhf logo.png" alt="SMHF Global">
+      <p>SMHF Global — independent, real-time news coverage from Pakistan and around the world.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      </div>
     </div>
-    <!--================= Scroll to Top Start =================-->
-    <div class="scroll-top-btn"><i class="fas fa-angle-up arrow-up"></i><i class="fas fa-circle-notch"></i></div>
-    <!--================= Scroll to Top End =================-->
-    <!-- Scripts remain unchanged -->
-    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendors/bootstrap.min.js"></script>
-    <script src="assets/js/vendors/swiper-bundle.min.js"></script>
-    <script src="assets/js/vendors/metisMenu.min.js"></script>
-    <script src="assets/js/vendors/rtsmenu.js"></script>
-    <script src="assets/js/vendors/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <!-- karachi weather script (unchanged) -->
-    <script>
-        async function fetchWeather() {
-            const apiKey = "0515fa3a97c1dd00f5313a2d038a0a24";
-            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&units=metric&appid=${apiKey}`;
-            try {
-                const response = await fetch(weatherUrl);
-                const data = await response.json();
-                const temp = data.main.temp;
-                const now = new Date();
-                const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                document.getElementById('temp').innerText = ` ${temp}°C`;
-                document.getElementById('time').innerText = ` ${timeString}`;
-            } catch (error) {
-                console.error("Error fetching weather");
-            }
-        }
-        fetchWeather();
-        setInterval(() => {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            document.getElementById('time').innerText = `${timeString}`;
-        }, 1000);
-    </script>
-    <!-- chatbot script (unchanged except minor visual tweak in append) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function sendMessage() {
-            const userInput = $('#userInput');
-            const chatbox = $('#chatbox');
-            const userMessage = userInput.val().trim();
-            if (userMessage) {
-                chatbox.append(`<div class="user-message"><strong>You:</strong> ${userMessage}</div>`);
-                const botResponse = getBotResponse(userMessage);
-                chatbox.append(`<div class="bot-message"><strong>Bot:</strong> ${botResponse}</div>`);
-                userInput.val('');
-                chatbox.scrollTop(chatbox[0].scrollHeight);
-            }
-        }
-        function getBotResponse(input) {
-            const lowerInput = input.toLowerCase().trim();
-            if (lowerInput === "move home") {
-                redirectToPage("index.html");
-                return "We are moving you to the Home page.";
-            } else if (lowerInput === "move about") {
-                redirectToPage("about.html");
-                return "We are moving you to the About page.";
-            } else if (lowerInput === "move contact") {
-                redirectToPage("contact.html");
-                return "We are moving you to the Contact page.";
-            }
-            // ... (all your original responses unchanged)
-            if (lowerInput.includes("hello")) {
-                return "Hello! How are you?";
-            } // ... rest exactly as you had
-            else {
-                return "Sorry, I can't answer that question. Please visit the SMHF website for more information.";
-            }
-        }
-        function redirectToPage(pageUrl) {
-            window.location.href = pageUrl;
-        }
-        function closeChat() {
-            $('#chatContainer').css('animation', 'fadeOut 0.3s ease forwards');
-            setTimeout(() => {
-                $('#chatContainer').hide();
-                $('#helpButton').show();
-            }, 300);
-        }
-        $(document).ready(function () {
-            $('#helpButton').click(function () {
-                $('#chatContainer').toggle();
-                if ($('#chatContainer').is(':visible')) {
-                    $('#chatContainer').css('animation', 'fadeIn 0.4s ease');
-                    $(this).hide();
-                }
-            });
-            $('#userInput').keypress(function (e) {
-                if (e.which === 13) {
-                    sendMessage();
-                }
-            });
-        });
-    </script>
-    <script>
-const observer=new IntersectionObserver(entries=>{
- entries.forEach(e=>{
-  if(e.isIntersecting)e.target.classList.add("active");
- });
-},{threshold:.15});
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
-</script>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="index.html#trending">Trending</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <a href="index.html#trending">Business</a>
+      <a href="index.html#trending">Technology</a>
+      <a href="index.html#trending">Sports</a>
+      <a href="index.html#trending">Entertainment</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get in touch</h4>
+      <p><i class="fa-solid fa-location-dot"></i> Karachi, Pakistan</p>
+      <p><i class="fa-solid fa-envelope"></i> info@smhfglobal.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>&copy; <span id="year"></span> SMHF Global. All rights reserved.</p></div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script src="assets/js/script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
