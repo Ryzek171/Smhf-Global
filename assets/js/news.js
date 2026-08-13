@@ -1,107 +1,357 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Article — SMHF Global</title>
-<link rel="apple-touch-icon" href="assets/images/smhf dark logo.png">
-<link rel="shortcut icon" type="image/x-icon" href="assets/images/smhf dark logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
+/* ==========================================================================
+   SMHF GLOBAL — NEWS ENGINE (Dawn.com + Google News via rss2json — CORS-safe)
+   ========================================================================== */
 
-<div class="cursor-glow" id="cursorGlow"></div>
-<div class="progress-bar" id="progressBar"></div>
-<div class="preloader" id="preloader"><div class="preloader-logo">SMHF<span>.</span></div></div>
+const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
 
-<header class="site-header" id="siteHeader">
-  <div class="container header-inner">
-    <a href="index.html" class="brand">
-      <img src="assets/images/smhf logo.png" alt="SMHF Global" class="brand-logo">
-      <span class="brand-text">SMHF <em>Global</em></span>
-    </a>
-    <nav class="main-nav" id="mainNav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="index.html#trending" class="nav-link">Trending</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="contact.html" class="nav-link">Contact</a>
-    </nav>
-    <div class="header-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
-        <i class="fa-solid fa-sun sun-icon"></i>
-        <i class="fa-solid fa-moon moon-icon"></i>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
+const CATEGORY_FEEDS = {
+  general:       { url: 'https://www.dawn.com/feeds/home',     source: 'Dawn.com',    google: false },
+  business:      { url: 'https://www.dawn.com/feeds/business', source: 'Dawn.com',    google: false },
+  technology:    { url: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true },
+  sports:        { url: 'https://www.dawn.com/feeds/sport',    source: 'Dawn.com',    google: false },
+  entertainment: { url: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true }
+};
 
-<div class="mobile-drawer" id="mobileDrawer">
-  <a href="index.html">Home</a>
-  <a href="index.html#trending">Trending</a>
-  <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
-</div>
-<div class="drawer-overlay" id="drawerOverlay"></div>
-
-<div id="articleContainer">
-  <!-- Filled dynamically -->
-</div>
-
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="assets/images/smhf logo.png" alt="SMHF Global">
-      <p>SMHF Global — independent, real-time news coverage from Pakistan and around the world.</p>
-      <div class="social-icons">
-        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#"><i class="fa-brands fa-twitter"></i></a>
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Explore</h4>
-      <a href="index.html">Home</a>
-      <a href="index.html#trending">Trending</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-col">
-      <h4>Categories</h4>
-      <a href="index.html#trending">Business</a>
-      <a href="index.html#trending">Technology</a>
-      <a href="index.html#trending">Sports</a>
-      <a href="index.html#trending">Entertainment</a>
-    </div>
-    <div class="footer-col">
-      <h4>Get in touch</h4>
-      <p><i class="fa-solid fa-location-dot"></i> Karachi, Pakistan</p>
-      <p><i class="fa-solid fa-envelope"></i> info@smhfglobal.com</p>
-    </div>
-  </div>
-  <div class="footer-bottom"><p>&copy; <span id="year"></span> SMHF Global. All rights reserved.</p></div>
-</footer>
-
-<button class="scroll-top" id="scrollTop" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
-
-<script src="assets/js/script.js"></script>
-<script>
+// Always-available inline placeholder — never a network request, never 404s.
 const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="#10152489"/><circle cx="200" cy="100" r="28" fill="#2f6bff" opacity="0.5"/><path d="M120 190 L170 130 L210 165 L250 110 L300 190 Z" fill="#00d9ff" opacity="0.4"/><text x="200" y="225" font-family="sans-serif" font-size="13" fill="#5c6478" text-anchor="middle">SMHF Global</text></svg>'
 );
+
+const state = {
+  currentCategory: 'general',
+  articles: [],
+  loadedTitles: new Set(),
+  page: 0
+};
+
+const feedCache = {};
+
+/* ---------- INIT ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  loadNewsCategory('general');
+});
+
+window.loadNewsCategory = function (category) {
+  state.currentCategory = category;
+  state.articles = [];
+  state.loadedTitles.clear();
+  state.page = 0;
+  showSkeletons();
+  fetchCategoryFeed(category, true);
+};
+
+/* ---------- FETCH: CATEGORY FEED (cached + auto-retry) ---------- */
+async function fetchCategoryFeed(category, isFirstLoad = false) {
+  const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
+
+  if (feedCache[category] && feedCache[category].length) {
+    addArticles(feedCache[category], isFirstLoad);
+    if (isFirstLoad) {
+      renderSpotlight();
+      renderMostRead();
+      renderTicker();
+      animateCounter(feedCache[category].length + Math.floor(Math.random() * 15) + 20);
+    }
+    return;
+  }
+
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`rss2json error: ${res.status}`);
+      const data = await res.json();
+      if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
+
+      let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
+
+      if (articles.length < 6) {
+        const extra = await fetchByQuery(categoryKeyword(category));
+        articles = mergeUnique(articles, extra);
+      }
+
+      if (!articles.length) throw new Error('No articles returned');
+
+      feedCache[category] = articles;
+      addArticles(articles, isFirstLoad);
+      if (isFirstLoad) {
+        renderSpotlight();
+        renderMostRead();
+        renderTicker();
+        animateCounter(articles.length + Math.floor(Math.random() * 15) + 20);
+      }
+      return;
+    } catch (err) {
+      console.error(`News fetch failed (attempt ${attempt + 1}) for ${category}:`, err);
+      if (attempt === 0) await new Promise(r => setTimeout(r, 900));
+    }
+  }
+  if (isFirstLoad) renderErrorState();
+}
+
+/* ---------- FETCH: SEARCH (used for "Load More" + search box + fallback) ---------- */
+async function fetchByQuery(query) {
+  const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`rss2json search error: ${res.status}`);
+    const data = await res.json();
+    if (data.status !== 'ok') return [];
+    return (data.items || []).map(item => parseNewsItem(item, { source: 'Google News', google: true }));
+  } catch (err) {
+    console.error('News search failed:', err);
+    return [];
+  }
+}
+
+function parseNewsItem(item, feedMeta) {
+  let title = item.title || 'Untitled';
+  let sourceName = feedMeta.source;
+
+  if (feedMeta.google) {
+    const sepIndex = title.lastIndexOf(' - ');
+    if (sepIndex > -1) {
+      sourceName = title.slice(sepIndex + 3).trim();
+      title = title.slice(0, sepIndex).trim();
+    }
+  }
+
+  const html = item.description || item.content || '';
+  const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
+  const image = item.thumbnail || (imgMatch ? imgMatch[1] : '') || '';
+
+  const cleanDesc = html.replace(/<[^>]*>/g, '').trim();
+
+  return {
+    title,
+    description: cleanDesc || 'Tap to read the full story.',
+    url: item.link,
+    image,
+    publishedAt: item.pubDate,
+    source: { name: sourceName }
+  };
+}
+
+function categoryKeyword(category) {
+  const map = {
+    general: 'Pakistan',
+    business: 'Pakistan economy',
+    technology: 'technology',
+    sports: 'cricket',
+    entertainment: 'entertainment celebrity'
+  };
+  return map[category] || 'Pakistan';
+}
+
+function mergeUnique(base, extra) {
+  const seen = new Set(base.map(a => a.title));
+  const merged = [...base];
+  extra.forEach(a => {
+    if (!seen.has(a.title)) { merged.push(a); seen.add(a.title); }
+  });
+  return merged;
+}
+
+/* ---------- ARTICLE HANDOFF (encode full article + category into the URL) ---------- */
+function storeAndLink(article) {
+  const payload = JSON.stringify({
+    title: article.title,
+    description: article.description,
+    url: article.url,
+    image: article.image,
+    publishedAt: article.publishedAt,
+    source: article.source,
+    category: state.currentCategory
+  });
+  const encoded = btoa(unescape(encodeURIComponent(payload)));
+  return `display.html?data=${encodeURIComponent(encoded)}`;
+}
+
+function addArticles(articles, replace) {
+  const fresh = articles.filter(a => !state.loadedTitles.has(a.title));
+  fresh.forEach(a => state.loadedTitles.add(a.title));
+  state.articles = replace ? fresh : [...state.articles, fresh];
+  renderGrid(fresh, replace);
+}
+
+function showSkeletons() {
+  const grid = document.getElementById('newsGrid');
+  if (!grid) return;
+  grid.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
+}
+
+function renderGrid(articles, replace) {
+  const grid = document.getElementById('newsGrid');
+  if (!grid) return;
+  if (replace) grid.innerHTML = '';
+
+  articles.forEach((a, i) => {
+    const card = document.createElement('div');
+    card.className = 'news-card';
+    card.setAttribute('data-animate', 'fade-up');
+    card.setAttribute('data-delay', (i % 3) * 100);
+    card.innerHTML = `
+      <a href="${storeAndLink(a)}" target="_blank" rel="noopener" class="news-card-img">
+        <img src="${a.image || PLACEHOLDER_IMG}" alt="" loading="lazy"
+             onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
+        <span class="news-card-cat">${state.currentCategory}</span>
+      </a>
+      <div class="news-card-body">
+        <div class="news-card-meta">
+          <span>${a.source?.name || 'SMHF Global'}</span>
+          <span>•</span>
+          <span>${timeAgo(a.publishedAt)}</span>
+          <span>•</span>
+          <span>${readingTime(a.description)}</span>
+        </div>
+        <h3>${escapeHTML(a.title)}</h3>
+        <p>${escapeHTML(truncateText(a.description, 110) || 'No description available.')}</p>
+        <a href="${storeAndLink(a)}" target="_blank" rel="noopener" class="news-card-link">
+          Read Story <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    requestAnimationFrame(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(card);
+    });
+  });
+}
+
+function renderSpotlight() {
+  const main = document.getElementById('spotlightMain');
+  if (!main || !state.articles.length) return;
+  const top = state.articles[0];
+
+  main.classList.remove('skeleton-card');
+  main.innerHTML = `
+    <img src="${top.image || PLACEHOLDER_IMG}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
+    <div class="spotlight-content">
+      <span class="news-card-cat">${state.currentCategory}</span>
+      <h2>${escapeHTML(top.title)}</h2>
+      <p>${escapeHTML(truncateText(top.description, 180))}</p>
+      <a href="${storeAndLink(top)}" target="_blank" rel="noopener" class="btn btn-primary">
+        Read Full Story <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  `;
+}
+
+function renderMostRead() {
+  const list = document.getElementById('mostReadList');
+  if (!list) return;
+  const items = state.articles.slice(1, 6);
+  if (!items.length) return;
+
+  list.innerHTML = items.map((a, i) => `
+    <a href="${sanitizeUrl(a.url)}" target="_blank" rel="noopener" class="most-read-item">
+      <span class="most-read-rank">${String(i + 1).padStart(2, '0')}</span>
+      <div>
+        <h5>${escapeHTML(a.title)}</h5>
+        <span>${a.source?.name || 'SMHF'} • ${timeAgo(a.publishedAt)}</span>
+      </div>
+    </a>
+  `).join('');
+}
+
+function renderTicker() {
+  const track = document.getElementById('tickerTrack');
+  if (!track || !state.articles.length) return;
+  const headlines = state.articles.slice(0, 8).map(a => `<span>${escapeHTML(a.title)}</span>`).join('');
+  track.innerHTML = headlines + headlines;
+}
+
+function animateCounter(target) {
+  const el = document.getElementById('liveCounter');
+  if (!el) return;
+  let current = 0;
+  const step = Math.max(1, Math.floor(target / 40));
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = current;
+  }, 30);
+}
+
+document.getElementById('loadMoreBtn')?.addEventListener('click', async function () {
+  this.classList.add('loading');
+  this.querySelector('.btn-text').textContent = 'Loading...';
+
+  state.page++;
+  const extra = await fetchByQuery(categoryKeyword(state.currentCategory));
+  const fresh = extra.filter(a => !state.loadedTitles.has(a.title));
+
+  if (fresh.length) {
+    fresh.forEach(a => state.loadedTitles.add(a.title));
+    state.articles.push(...fresh);
+    renderGrid(fresh, false);
+  } else {
+    this.querySelector('.btn-text').textContent = 'No More Stories';
+    this.disabled = true;
+  }
+
+  this.classList.remove('loading');
+  if (!this.disabled) this.querySelector('.btn-text').textContent = 'Load More';
+});
+
+const searchInputEl = document.getElementById('searchInput');
+let searchTimeout;
+searchInputEl?.addEventListener('input', (e) => {
+  clearTimeout(searchTimeout);
+  const q = e.target.value.trim();
+  const resultsEl = document.getElementById('searchResults');
+  if (!q) { resultsEl.innerHTML = ''; return; }
+
+  resultsEl.innerHTML = '<p style="color:var(--text-dim)">Searching...</p>';
+  searchTimeout = setTimeout(async () => {
+    const results = await fetchByQuery(q);
+    if (!results.length) {
+      resultsEl.innerHTML = '<p style="color:var(--text-dim)">No results found.</p>';
+      return;
+    }
+    resultsEl.innerHTML = results.slice(0, 6).map(a => `
+      <a href="${storeAndLink(a)}" target="_blank" rel="noopener" class="most-read-item" style="margin-bottom:10px;">
+        <img src="${a.image || PLACEHOLDER_IMG}" style="width:70px;height:50px;object-fit:cover;border-radius:8px;" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
+        <div>
+          <h5>${escapeHTML(a.title)}</h5>
+          <span>${a.source?.name || 'SMHF'} • ${timeAgo(a.publishedAt)}</span>
+        </div>
+      </a>
+    `).join('');
+  }, 450);
+});
+
+function renderErrorState() {
+  const grid = document.getElementById('newsGrid');
+  if (grid) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-dim);">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size:28px; margin-bottom:12px; color:var(--danger);"></i>
+        <p>Unable to load news right now. Please refresh or try again shortly.</p>
+      </div>`;
+  }
+  const ticker = document.getElementById('tickerTrack');
+  if (ticker) ticker.innerHTML = '<span>Unable to load latest headlines — please refresh.</span>';
+}
 
 function escapeHTML(str = '') {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+function sanitizeUrl(url) {
+  try { return new URL(url).href; } catch { return '#'; }
 }
 function timeAgo(dateStr) {
   if (!dateStr) return 'Recently';
@@ -115,117 +365,9 @@ function readingTime(text = '') {
   const words = text.split(' ').length;
   return `${Math.max(1, Math.ceil(words / 200))} min read`;
 }
-
-const params = new URLSearchParams(window.location.search);
-const dataParam = params.get('data');
-let raw = null;
-if (dataParam) {
-  try {
-    raw = decodeURIComponent(escape(atob(dataParam)));
-  } catch (e) {
-    raw = null;
-  }
+function truncateText(text, maxLen) {
+  if (!text) return '';
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  return clean.slice(0, maxLen).replace(/\s+\S*$/, '') + '…';
 }
-
-const container = document.getElementById('articleContainer');
-
-if (!raw) {
-  container.innerHTML = `
-    <div class="not-found">
-      <i class="fa-solid fa-newspaper" style="font-size:32px;margin-bottom:14px;color:var(--text-faint);"></i>
-      <h2 style="margin-bottom:10px;">Article not found</h2>
-      <p style="margin-bottom:24px;">This link may have expired. Please go back and pick a story again.</p>
-      <a href="index.html" class="btn btn-primary">Back to Home</a>
-    </div>`;
-} else {
-  const a = JSON.parse(raw);
-
-  container.innerHTML = `
-    <section class="article-hero">
-      <div class="container article-hero-img" data-animate="fade-up">
-        <img src="${a.image || PLACEHOLDER_IMG}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
-      </div>
-    </section>
-    <div class="article-wrap" data-animate="fade-up">
-      <div class="article-meta-row">
-        <span class="news-card-cat" style="position:static;">${a.source?.name || 'SMHF Global'}</span>
-        <span>${timeAgo(a.publishedAt)}</span>
-        <span>•</span>
-        <span>${readingTime(a.description)}</span>
-      </div>
-      <h1>${escapeHTML(a.title)}</h1>
-      <p class="article-desc">${escapeHTML(a.description || '')}</p>
-
-      <div class="source-cta">
-        <p>SMHF Global curates headlines from trusted sources. Continue reading the full story directly on ${escapeHTML(a.source?.name || 'the publisher')}'s website.</p>
-        <a href="${a.url}" target="_blank" rel="noopener" class="btn btn-primary">
-          Read Full Article <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
-      </div>
-
-      <h3 class="related-heading">More Like This</h3>
-      <div class="news-grid" id="relatedGrid" style="grid-template-columns:repeat(2,1fr);">
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-      </div>
-    </div>
-  `;
-
-  loadRelated(a.title, a.category);
-}
-
-async function loadRelated(title, category) {
-  const dawnFeeds = {
-    general: 'https://www.dawn.com/feeds/home',
-    business: 'https://www.dawn.com/feeds/business',
-    sports: 'https://www.dawn.com/feeds/sport'
-  };
-  const grid = document.getElementById('relatedGrid');
-  if (!grid) return;
-
-  const usingDawn = !!dawnFeeds[category];
-  const feedUrl = usingDawn
-    ? dawnFeeds[category]
-    : `https://news.google.com/rss/search?q=${encodeURIComponent(title.split(' ').slice(0, 4).join(' '))}&hl=en-PK&gl=PK&ceid=PK:en`;
-  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.status !== 'ok' || !data.items?.length) {
-      grid.innerHTML = '<p style="color:var(--text-dim);">No related stories found.</p>';
-      return;
-    }
-
-    const items = data.items.filter(it => it.title !== title).slice(0, 4);
-
-    grid.innerHTML = items.map(item => {
-      let t = item.title || '';
-      let src = usingDawn ? 'Dawn.com' : 'Google News';
-      if (!usingDawn) {
-        const sep = t.lastIndexOf(' - ');
-        if (sep > -1) { src = t.slice(sep + 3).trim(); t = t.slice(0, sep).trim(); }
-      }
-      const html = item.description || '';
-      const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
-      const img = item.thumbnail || (imgMatch ? imgMatch[1] : '') || PLACEHOLDER_IMG;
-
-      return `
-        <a href="${item.link}" target="_blank" rel="noopener" class="news-card">
-          <div class="news-card-img">
-            <img src="${img}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
-          </div>
-          <div class="news-card-body">
-            <div class="news-card-meta"><span>${src}</span></div>
-            <h3 style="font-size:15px;">${escapeHTML(t)}</h3>
-          </div>
-        </a>`;
-    }).join('');
-  } catch (err) {
-    grid.innerHTML = '<p style="color:var(--text-dim);">Unable to load related stories.</p>';
-    console.error(err);
-  }
-}
-</script>
-</body>
-</html>
