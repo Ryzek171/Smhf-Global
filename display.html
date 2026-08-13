@@ -238,10 +238,6 @@ async function loadRelated(title, category) {
         </div>
       </a>`;
   }).join('');
-} catch (err) {
-    grid.innerHTML = '<p style="color:var(--text-dim);">Unable to load related stories.</p>';
-    console.error(err);
-  }
 }
 </script>
 </body>
