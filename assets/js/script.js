@@ -9,8 +9,12 @@ function hidePreloader() {
   const preloader = document.getElementById('preloader');
   if (preloader) preloader.classList.add('hide');
 }
+function hidePreloader() {
+  const preloader = document.getElementById('preloader');
+  if (preloader) preloader.classList.add('hide');
+}
 window.addEventListener('load', () => setTimeout(hidePreloader, 300));
-setTimeout(hidePreloader, 2500); // safety net — never gets stuck
+setTimeout(hidePreloader, 2500);
 
   /* ---------- YEAR IN FOOTER ---------- */
   const yearEl = document.getElementById('year');
