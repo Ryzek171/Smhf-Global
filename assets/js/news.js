@@ -4,15 +4,12 @@
 
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
 
-// Primary feed per category — Dawn where a dedicated feed might exist (real images),
-// Google News topic as primary otherwise. If primary comes up short, we ALWAYS
-// top up with a Google News search fallback, so a category never goes fully empty.
 const CATEGORY_FEEDS = {
-  general:       { url: 'https://www.dawn.com/feeds/home',        source: 'Dawn.com',    google: false },
-  business:      { url: 'https://www.dawn.com/feeds/business',    source: 'Dawn.com',    google: false },
-  technology:    { url: 'https://www.dawn.com/feeds/sci-tech',    source: 'Dawn.com',    google: false },
-  sports:        { url: 'https://www.dawn.com/feeds/sport',       source: 'Dawn.com',    google: false },
-  entertainment: { url: 'https://www.dawn.com/feeds/entertainment', source: 'Dawn.com',  google: false }
+  general:       { url: 'https://www.dawn.com/feeds/home',          source: 'Dawn.com', google: false },
+  business:      { url: 'https://www.dawn.com/feeds/business',      source: 'Dawn.com', google: false },
+  technology:    { url: 'https://www.dawn.com/feeds/sci-tech',      source: 'Dawn.com', google: false },
+  sports:        { url: 'https://www.dawn.com/feeds/sport',         source: 'Dawn.com', google: false },
+  entertainment: { url: 'https://www.dawn.com/feeds/entertainment', source: 'Dawn.com', google: false }
 };
 
 const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -28,18 +25,24 @@ const state = {
 
 const feedCache = {};
 
+// Race-condition guard: only the MOST RECENT category switch is allowed to render.
+let activeRequestId = 0;
+
 /* ---------- INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   loadNewsCategory('general');
 });
 
 window.loadNewsCategory = function (category) {
+  activeRequestId++;
+  const myRequestId = activeRequestId;
+
   state.currentCategory = category;
   state.articles = [];
   state.loadedTitles.clear();
   state.page = 0;
   showSkeletons();
-  fetchCategoryFeed(category, true);
+  fetchCategoryFeed(category, true, myRequestId);
 };
 
 /* ---------- Try the primary feed; never throws, just returns [] on any failure ---------- */
@@ -57,11 +60,12 @@ async function tryPrimaryFeed(feedMeta) {
   }
 }
 
-/* ---------- FETCH: CATEGORY FEED (cached, primary + guaranteed fallback, auto-retry) ---------- */
-async function fetchCategoryFeed(category, isFirstLoad = false) {
+/* ---------- FETCH: CATEGORY FEED (cached, primary + guaranteed fallback, auto-retry, race-safe) ---------- */
+async function fetchCategoryFeed(category, isFirstLoad = false, requestId) {
   const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
 
   if (feedCache[category] && feedCache[category].length) {
+    if (requestId !== activeRequestId) return; // stale — a newer tab was clicked meanwhile
     addArticles(feedCache[category], isFirstLoad);
     if (isFirstLoad) {
       renderSpotlight();
@@ -75,13 +79,16 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       let articles = await tryPrimaryFeed(feedMeta);
+      if (requestId !== activeRequestId) return; // stale — abandon this attempt
 
       if (articles.length < 6) {
         const extra = await fetchByQuery(categoryKeyword(category));
+        if (requestId !== activeRequestId) return; // stale — abandon this attempt
         articles = mergeUnique(articles, extra);
       }
 
       if (!articles.length) throw new Error(`No articles for ${category}`);
+      if (requestId !== activeRequestId) return; // final stale check before rendering
 
       feedCache[category] = articles;
       addArticles(articles, isFirstLoad);
@@ -94,10 +101,11 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
       return;
     } catch (err) {
       console.error(`News fetch failed (attempt ${attempt + 1}) for ${category}:`, err);
+      if (requestId !== activeRequestId) return;
       if (attempt === 0) await new Promise(r => setTimeout(r, 1000));
     }
   }
-  if (isFirstLoad) renderErrorState();
+  if (requestId === activeRequestId && isFirstLoad) renderErrorState();
 }
 
 /* ---------- FETCH: SEARCH (fallback + "Load More" + search box) ---------- */
@@ -303,8 +311,11 @@ document.getElementById('loadMoreBtn')?.addEventListener('click', async function
   this.classList.add('loading');
   this.querySelector('.btn-text').textContent = 'Loading...';
 
+  const myRequestId = activeRequestId;
   state.page++;
   const extra = await fetchByQuery(categoryKeyword(state.currentCategory));
+  if (myRequestId !== activeRequestId) return; // category changed while loading more
+
   const fresh = extra.filter(a => !state.loadedTitles.has(a.title));
 
   if (fresh.length) {
