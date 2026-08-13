@@ -4,15 +4,17 @@
 
 const RSS2JSON_BASE = 'https://api.rss2json.com/v1/api.json';
 
+// Primary feed per category — Dawn where a dedicated feed might exist (real images),
+// Google News topic as primary otherwise. If primary comes up short, we ALWAYS
+// top up with a Google News search fallback, so a category never goes fully empty.
 const CATEGORY_FEEDS = {
-  general:       { url: 'https://www.dawn.com/feeds/home',     source: 'Dawn.com',    google: false },
-  business:      { url: 'https://www.dawn.com/feeds/business', source: 'Dawn.com',    google: false },
-  technology:    { url: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true },
-  sports:        { url: 'https://www.dawn.com/feeds/sport',    source: 'Dawn.com',    google: false },
-  entertainment: { url: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-PK&gl=PK&ceid=PK:en', source: 'Google News', google: true }
+  general:       { url: 'https://www.dawn.com/feeds/home',        source: 'Dawn.com',    google: false },
+  business:      { url: 'https://www.dawn.com/feeds/business',    source: 'Dawn.com',    google: false },
+  technology:    { url: 'https://www.dawn.com/feeds/sci-tech',    source: 'Dawn.com',    google: false },
+  sports:        { url: 'https://www.dawn.com/feeds/sport',       source: 'Dawn.com',    google: false },
+  entertainment: { url: 'https://www.dawn.com/feeds/entertainment', source: 'Dawn.com',  google: false }
 };
 
-// Always-available inline placeholder — never a network request, never 404s.
 const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="#10152489"/><circle cx="200" cy="100" r="28" fill="#2f6bff" opacity="0.5"/><path d="M120 190 L170 130 L210 165 L250 110 L300 190 Z" fill="#00d9ff" opacity="0.4"/><text x="200" y="225" font-family="sans-serif" font-size="13" fill="#5c6478" text-anchor="middle">SMHF Global</text></svg>'
 );
@@ -40,7 +42,22 @@ window.loadNewsCategory = function (category) {
   fetchCategoryFeed(category, true);
 };
 
-/* ---------- FETCH: CATEGORY FEED (cached + auto-retry) ---------- */
+/* ---------- Try the primary feed; never throws, just returns [] on any failure ---------- */
+async function tryPrimaryFeed(feedMeta) {
+  try {
+    const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const data = await res.json();
+    if (data.status !== 'ok') return [];
+    return (data.items || []).map(item => parseNewsItem(item, feedMeta));
+  } catch (err) {
+    console.warn('Primary feed failed, will fall back:', err);
+    return [];
+  }
+}
+
+/* ---------- FETCH: CATEGORY FEED (cached, primary + guaranteed fallback, auto-retry) ---------- */
 async function fetchCategoryFeed(category, isFirstLoad = false) {
   const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
 
@@ -55,23 +72,16 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
     return;
   }
 
-  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
-
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`rss2json error: ${res.status}`);
-      const data = await res.json();
-      if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
-
-      let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
+      let articles = await tryPrimaryFeed(feedMeta);
 
       if (articles.length < 6) {
         const extra = await fetchByQuery(categoryKeyword(category));
         articles = mergeUnique(articles, extra);
       }
 
-      if (!articles.length) throw new Error('No articles returned');
+      if (!articles.length) throw new Error(`No articles for ${category}`);
 
       feedCache[category] = articles;
       addArticles(articles, isFirstLoad);
@@ -84,13 +94,13 @@ async function fetchCategoryFeed(category, isFirstLoad = false) {
       return;
     } catch (err) {
       console.error(`News fetch failed (attempt ${attempt + 1}) for ${category}:`, err);
-      if (attempt === 0) await new Promise(r => setTimeout(r, 900));
+      if (attempt === 0) await new Promise(r => setTimeout(r, 1000));
     }
   }
   if (isFirstLoad) renderErrorState();
 }
 
-/* ---------- FETCH: SEARCH (used for "Load More" + search box + fallback) ---------- */
+/* ---------- FETCH: SEARCH (fallback + "Load More" + search box) ---------- */
 async function fetchByQuery(query) {
   const feedUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-PK&gl=PK&ceid=PK:en`;
   const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedUrl)}`;
@@ -154,7 +164,7 @@ function mergeUnique(base, extra) {
   return merged;
 }
 
-/* ---------- ARTICLE HANDOFF (encode full article + category into the URL) ---------- */
+/* ---------- ARTICLE HANDOFF (store in localStorage with a short, clean ID) ---------- */
 function storeAndLink(article) {
   const id = 'art_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
   const payload = {
