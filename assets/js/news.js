@@ -19,7 +19,9 @@ const state = {
   page: 0
 };
 
-const PLACEHOLDER_IMG = 'assets/images/latest/image1.png';
+const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250"><rect width="400" height="250" fill="#10152489"/><circle cx="200" cy="100" r="28" fill="#2f6bff" opacity="0.5"/><path d="M120 190 L170 130 L210 165 L250 110 L300 190 Z" fill="#00d9ff" opacity="0.4"/><text x="200" y="225" font-family="sans-serif" font-size="13" fill="#5c6478" text-anchor="middle">SMHF Global</text></svg>'
+);
 
 document.addEventListener('DOMContentLoaded', () => {
   loadNewsCategory('general');
