@@ -156,7 +156,8 @@ function mergeUnique(base, extra) {
 
 /* ---------- ARTICLE HANDOFF (encode full article + category into the URL) ---------- */
 function storeAndLink(article) {
-  const payload = JSON.stringify({
+  const id = 'art_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+  const payload = {
     title: article.title,
     description: article.description,
     url: article.url,
@@ -164,9 +165,13 @@ function storeAndLink(article) {
     publishedAt: article.publishedAt,
     source: article.source,
     category: state.currentCategory
-  });
-  const encoded = btoa(unescape(encodeURIComponent(payload)));
-  return `display.html?data=${encodeURIComponent(encoded)}`;
+  };
+  try {
+    localStorage.setItem(id, JSON.stringify(payload));
+  } catch (e) {
+    console.error('Storage failed:', e);
+  }
+  return `display.html?id=${id}`;
 }
 
 function addArticles(articles, replace) {
