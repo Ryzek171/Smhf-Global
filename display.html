@@ -117,11 +117,11 @@ function readingTime(text = '') {
 }
 
 const params = new URLSearchParams(window.location.search);
-const dataParam = params.get('data');
+const articleId = params.get('id');
 let raw = null;
-if (dataParam) {
+if (articleId) {
   try {
-    raw = decodeURIComponent(escape(atob(dataParam)));
+    raw = localStorage.getItem(articleId);
   } catch (e) {
     raw = null;
   }
