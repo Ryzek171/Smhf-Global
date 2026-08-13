@@ -5,12 +5,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- PRELOADER ---------- */
-  window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      setTimeout(() => preloader.classList.add('hide'), 400);
-    }
-  });
+function hidePreloader() {
+  const preloader = document.getElementById('preloader');
+  if (preloader) preloader.classList.add('hide');
+}
+window.addEventListener('load', () => setTimeout(hidePreloader, 300));
+setTimeout(hidePreloader, 2500); // safety net — never gets stuck
 
   /* ---------- YEAR IN FOOTER ---------- */
   const yearEl = document.getElementById('year');
