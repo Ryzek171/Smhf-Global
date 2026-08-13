@@ -36,36 +36,55 @@ window.loadNewsCategory = function (category) {
   fetchCategoryFeed(category, true);
 };
 
+const feedCache = {};
+
 async function fetchCategoryFeed(category, isFirstLoad = false) {
   const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
-  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
 
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`rss2json error: ${res.status}`);
-    const data = await res.json();
-    if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
-
-    let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
-
-    if (articles.length < 6) {
-      const extra = await fetchByQuery(categoryKeyword(category));
-      articles = mergeUnique(articles, extra);
-    }
-
-    if (!articles.length) throw new Error('No articles returned');
-
-    addArticles(articles, isFirstLoad);
+  if (feedCache[category] && feedCache[category].length) {
+    addArticles(feedCache[category], isFirstLoad);
     if (isFirstLoad) {
       renderSpotlight();
       renderMostRead();
       renderTicker();
-      animateCounter(articles.length + Math.floor(Math.random() * 15) + 20);
+      animateCounter(feedCache[category].length + Math.floor(Math.random() * 15) + 20);
     }
-  } catch (err) {
-    console.error('News fetch failed:', err);
-    if (isFirstLoad) renderErrorState();
+    return;
   }
+
+  const url = `${RSS2JSON_BASE}?rss_url=${encodeURIComponent(feedMeta.url)}`;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`rss2json error: ${res.status}`);
+      const data = await res.json();
+      if (data.status !== 'ok') throw new Error(data.message || 'Feed error');
+
+      let articles = (data.items || []).map(item => parseNewsItem(item, feedMeta));
+
+      if (articles.length < 6) {
+        const extra = await fetchByQuery(categoryKeyword(category));
+        articles = mergeUnique(articles, extra);
+      }
+
+      if (!articles.length) throw new Error('No articles returned');
+
+      feedCache[category] = articles;
+      addArticles(articles, isFirstLoad);
+      if (isFirstLoad) {
+        renderSpotlight();
+        renderMostRead();
+        renderTicker();
+        animateCounter(articles.length + Math.floor(Math.random() * 15) + 20);
+      }
+      return;
+    } catch (err) {
+      console.error(`News fetch failed (attempt ${attempt + 1}):`, err);
+      if (attempt === 0) await new Promise(r => setTimeout(r, 900));
+    }
+  }
+  if (isFirstLoad) renderErrorState();
 }
 
 async function fetchByQuery(query) {
