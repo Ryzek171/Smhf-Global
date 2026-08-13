@@ -18,19 +18,21 @@ const PLACEHOLDER_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
 
 const state = {
   currentCategory: 'general',
-  articles: [],
+  articles: [],       // grid articles (change with category tabs)
   loadedTitles: new Set(),
   page: 0
 };
 
-const feedCache = {};
+// Spotlight / Most Read / Ticker are fixed to General news — independent of tabs.
+const headlineState = { articles: [] };
 
-// Race-condition guard: only the MOST RECENT category switch is allowed to render.
+const feedCache = {};
 let activeRequestId = 0;
 
 /* ---------- INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
-  loadNewsCategory('general');
+  loadNewsCategory('general');   // grid
+  loadHeadlineFeed();            // spotlight + most read + ticker (fixed, general only)
 });
 
 window.loadNewsCategory = function (category) {
@@ -42,7 +44,7 @@ window.loadNewsCategory = function (category) {
   state.loadedTitles.clear();
   state.page = 0;
   showSkeletons();
-  fetchCategoryFeed(category, true, myRequestId);
+  fetchCategoryFeed(category, myRequestId);
 };
 
 /* ---------- Try the primary feed; never throws, just returns [] on any failure ---------- */
@@ -60,44 +62,59 @@ async function tryPrimaryFeed(feedMeta) {
   }
 }
 
-/* ---------- FETCH: CATEGORY FEED (cached, primary + guaranteed fallback, auto-retry, race-safe) ---------- */
-async function fetchCategoryFeed(category, isFirstLoad = false, requestId) {
-  const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
+/* ---------- FETCH: HEADLINE SECTIONS (Spotlight / Most Read / Ticker) — General only, runs ONCE ---------- */
+async function loadHeadlineFeed() {
+  const feedMeta = CATEGORY_FEEDS.general;
 
-  if (feedCache[category] && feedCache[category].length) {
-    if (requestId !== activeRequestId) return; // stale — a newer tab was clicked meanwhile
-    addArticles(feedCache[category], isFirstLoad);
-    if (isFirstLoad) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      let articles = await tryPrimaryFeed(feedMeta);
+      if (articles.length < 6) {
+        const extra = await fetchByQuery('Pakistan');
+        articles = mergeUnique(articles, extra);
+      }
+      if (!articles.length) throw new Error('No headline articles');
+
+      headlineState.articles = articles;
       renderSpotlight();
       renderMostRead();
       renderTicker();
-      animateCounter(feedCache[category].length + Math.floor(Math.random() * 15) + 20);
+      return;
+    } catch (err) {
+      console.error(`Headline feed failed (attempt ${attempt + 1}):`, err);
+      if (attempt === 0) await new Promise(r => setTimeout(r, 1000));
     }
+  }
+}
+
+/* ---------- FETCH: CATEGORY FEED (grid only — cached, primary + fallback, auto-retry, race-safe) ---------- */
+async function fetchCategoryFeed(category, requestId) {
+  const feedMeta = CATEGORY_FEEDS[category] || CATEGORY_FEEDS.general;
+
+  if (feedCache[category] && feedCache[category].length) {
+    if (requestId !== activeRequestId) return;
+    addArticles(feedCache[category], true);
+    animateCounter(feedCache[category].length + Math.floor(Math.random() * 15) + 20);
     return;
   }
 
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       let articles = await tryPrimaryFeed(feedMeta);
-      if (requestId !== activeRequestId) return; // stale — abandon this attempt
+      if (requestId !== activeRequestId) return;
 
       if (articles.length < 6) {
         const extra = await fetchByQuery(categoryKeyword(category));
-        if (requestId !== activeRequestId) return; // stale — abandon this attempt
+        if (requestId !== activeRequestId) return;
         articles = mergeUnique(articles, extra);
       }
 
       if (!articles.length) throw new Error(`No articles for ${category}`);
-      if (requestId !== activeRequestId) return; // final stale check before rendering
+      if (requestId !== activeRequestId) return;
 
       feedCache[category] = articles;
-      addArticles(articles, isFirstLoad);
-      if (isFirstLoad) {
-        renderSpotlight();
-        renderMostRead();
-        renderTicker();
-        animateCounter(articles.length + Math.floor(Math.random() * 15) + 20);
-      }
+      addArticles(articles, true);
+      animateCounter(articles.length + Math.floor(Math.random() * 15) + 20);
       return;
     } catch (err) {
       console.error(`News fetch failed (attempt ${attempt + 1}) for ${category}:`, err);
@@ -105,7 +122,7 @@ async function fetchCategoryFeed(category, isFirstLoad = false, requestId) {
       if (attempt === 0) await new Promise(r => setTimeout(r, 1000));
     }
   }
-  if (requestId === activeRequestId && isFirstLoad) renderErrorState();
+  if (requestId === activeRequestId) renderErrorState();
 }
 
 /* ---------- FETCH: SEARCH (fallback + "Load More" + search box) ---------- */
@@ -173,7 +190,7 @@ function mergeUnique(base, extra) {
 }
 
 /* ---------- ARTICLE HANDOFF (store in localStorage with a short, clean ID) ---------- */
-function storeAndLink(article) {
+function storeAndLink(article, category) {
   const id = 'art_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
   const payload = {
     title: article.title,
@@ -182,7 +199,7 @@ function storeAndLink(article) {
     image: article.image,
     publishedAt: article.publishedAt,
     source: article.source,
-    category: state.currentCategory
+    category: category || state.currentCategory
   };
   try {
     localStorage.setItem(id, JSON.stringify(payload));
@@ -252,19 +269,20 @@ function renderGrid(articles, replace) {
   });
 }
 
+/* ---------- Spotlight / Most Read / Ticker — always General, set once ---------- */
 function renderSpotlight() {
   const main = document.getElementById('spotlightMain');
-  if (!main || !state.articles.length) return;
-  const top = state.articles[0];
+  if (!main || !headlineState.articles.length) return;
+  const top = headlineState.articles[0];
 
   main.classList.remove('skeleton-card');
   main.innerHTML = `
     <img src="${top.image || PLACEHOLDER_IMG}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
     <div class="spotlight-content">
-      <span class="news-card-cat">${state.currentCategory}</span>
+      <span class="news-card-cat">general</span>
       <h2>${escapeHTML(top.title)}</h2>
       <p>${escapeHTML(truncateText(top.description, 180))}</p>
-      <a href="${storeAndLink(top)}" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="${storeAndLink(top, 'general')}" target="_blank" rel="noopener" class="btn btn-primary">
         Read Full Story <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
@@ -274,7 +292,7 @@ function renderSpotlight() {
 function renderMostRead() {
   const list = document.getElementById('mostReadList');
   if (!list) return;
-  const items = state.articles.slice(1, 6);
+  const items = headlineState.articles.slice(1, 6);
   if (!items.length) return;
 
   list.innerHTML = items.map((a, i) => `
@@ -290,8 +308,8 @@ function renderMostRead() {
 
 function renderTicker() {
   const track = document.getElementById('tickerTrack');
-  if (!track || !state.articles.length) return;
-  const headlines = state.articles.slice(0, 8).map(a => `<span>${escapeHTML(a.title)}</span>`).join('');
+  if (!track || !headlineState.articles.length) return;
+  const headlines = headlineState.articles.slice(0, 8).map(a => `<span>${escapeHTML(a.title)}</span>`).join('');
   track.innerHTML = headlines + headlines;
 }
 
@@ -314,7 +332,7 @@ document.getElementById('loadMoreBtn')?.addEventListener('click', async function
   const myRequestId = activeRequestId;
   state.page++;
   const extra = await fetchByQuery(categoryKeyword(state.currentCategory));
-  if (myRequestId !== activeRequestId) return; // category changed while loading more
+  if (myRequestId !== activeRequestId) return;
 
   const fresh = extra.filter(a => !state.loadedTitles.has(a.title));
 
@@ -367,8 +385,6 @@ function renderErrorState() {
         <p>Unable to load news right now. Please refresh or try again shortly.</p>
       </div>`;
   }
-  const ticker = document.getElementById('tickerTrack');
-  if (ticker) ticker.innerHTML = '<span>Unable to load latest headlines — please refresh.</span>';
 }
 
 function escapeHTML(str = '') {
