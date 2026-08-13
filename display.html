@@ -178,50 +178,67 @@ async function loadRelated(title, category) {
   const dawnFeeds = {
     general: 'https://www.dawn.com/feeds/home',
     business: 'https://www.dawn.com/feeds/business',
-    sports: 'https://www.dawn.com/feeds/sport'
+    sports: 'https://www.dawn.com/feeds/sport',
+    technology: 'https://www.dawn.com/feeds/sci-tech',
+    entertainment: 'https://www.dawn.com/feeds/entertainment'
   };
   const grid = document.getElementById('relatedGrid');
   if (!grid) return;
 
-  const usingDawn = !!dawnFeeds[category];
-  const feedUrl = usingDawn
-    ? dawnFeeds[category]
-    : `https://news.google.com/rss/search?q=${encodeURIComponent(title.split(' ').slice(0, 4).join(' '))}&hl=en-PK&gl=PK&ceid=PK:en`;
-  const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+  async function tryFeed(feedUrl) {
+    try {
+      const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.status !== 'ok') return [];
+      return data.items || [];
+    } catch (e) { return []; }
+  }
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.status !== 'ok' || !data.items?.length) {
-      grid.innerHTML = '<p style="color:var(--text-dim);">No related stories found.</p>';
-      return;
-    }
+  let items = [];
+  let usingDawn = false;
+  if (dawnFeeds[category]) {
+    items = await tryFeed(dawnFeeds[category]);
+    usingDawn = items.length > 0;
+  }
+  if (items.length < 4) {
+    const searchUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(title.split(' ').slice(0, 4).join(' '))}&hl=en-PK&gl=PK&ceid=PK:en`;
+    const extra = await tryFeed(searchUrl);
+    if (!usingDawn) items = extra;
+    else items = items.concat(extra);
+  }
 
-    const items = data.items.filter(it => it.title !== title).slice(0, 4);
+  items = items.filter(it => it.title !== title).slice(0, 4);
 
-    grid.innerHTML = items.map(item => {
-      let t = item.title || '';
-      let src = usingDawn ? 'Dawn.com' : 'Google News';
-      if (!usingDawn) {
-        const sep = t.lastIndexOf(' - ');
-        if (sep > -1) { src = t.slice(sep + 3).trim(); t = t.slice(0, sep).trim(); }
-      }
-      const html = item.description || '';
-      const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
-      const img = item.thumbnail || (imgMatch ? imgMatch[1] : '') || PLACEHOLDER_IMG;
+  if (!items.length) {
+    grid.innerHTML = '<p style="color:var(--text-dim);">No related stories found.</p>';
+    return;
+  }
 
-      return `
-        <a href="${item.link}" target="_blank" rel="noopener" class="news-card">
-          <div class="news-card-img">
-            <img src="${img}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
-          </div>
-          <div class="news-card-body">
-            <div class="news-card-meta"><span>${src}</span></div>
-            <h3 style="font-size:15px;">${escapeHTML(t)}</h3>
-          </div>
-        </a>`;
-    }).join('');
-  } catch (err) {
+  grid.innerHTML = items.map(item => {
+    let t = item.title || '';
+    let src = 'Google News';
+    const sep = t.lastIndexOf(' - ');
+    const looksLikeGoogle = sep > -1 && !dawnFeeds[category];
+    if (looksLikeGoogle) { src = t.slice(sep + 3).trim(); t = t.slice(0, sep).trim(); }
+    else if (dawnFeeds[category]) { src = 'Dawn.com'; }
+
+    const html = item.description || '';
+    const imgMatch = html.match(/<img[^>]+src="([^">]+)"/i);
+    const img = item.thumbnail || (imgMatch ? imgMatch[1] : '') || PLACEHOLDER_IMG;
+
+    return `
+      <a href="${item.link}" target="_blank" rel="noopener" class="news-card">
+        <div class="news-card-img">
+          <img src="${img}" alt="" onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}'">
+        </div>
+        <div class="news-card-body">
+          <div class="news-card-meta"><span>${src}</span></div>
+          <h3 style="font-size:15px;">${escapeHTML(t)}</h3>
+        </div>
+      </a>`;
+  }).join('');
+} catch (err) {
     grid.innerHTML = '<p style="color:var(--text-dim);">Unable to load related stories.</p>';
     console.error(err);
   }
